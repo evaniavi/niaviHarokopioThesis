@@ -1,0 +1,58 @@
+
+{% extends 'base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block title %}Ο Λογαριασμος Μου{% endblock %}
+
+ 
+
+{% block content %}
+
+<style>
+  .profile-pic{
+    max-width: 200px;
+    max-height: 200px;
+    margin: 0 auto;
+    border-radius: 50%;
+  }
+</style>
+
+
+<br>
+<div class="row">
+	<div class="col-md-3">
+		<div class="card card-body">
+			<a class="btn btn-secondary" style="background-color: #23384e;" href="{% url 'home' %}"> &#8592; Πίσω στην Αρχική</a>
+			<hr>
+			<h3 style="text-align: center">Το προφίλ μου</h3>
+			<hr>
+      {% if user.profile.profile_pic %}
+      <img  class="profile-pic" src="{{request.user.profile.profile_pic.url}} " />
+
+      {% else %}
+
+            <img class="profile-pic" src="{% static 'images/default_profile.png'%}" />
+      {% endif %}
+		</div>
+	</div>
+	<div class="col-md-9">
+		<div class="card card-body">
+
+			<form method="POST" action="" enctype="multipart/form-data">
+				{% csrf_token %}
+
+				{{ form|crispy}}
+				
+				  {{ profile_form|crispy}}
+				  
+				  <div class="pt-lg-3 pl-lg-2">
+			<input class="btn btn-primary" type="submit" name="Update Information">
+		</div>
+			</form>
+		</div>
+	</div>
+</div>
+
+
+
+{% endblock %}

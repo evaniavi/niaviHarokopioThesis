@@ -1,0 +1,86 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block content %}
+
+<div class="d-flex justify-content-center">
+
+    <div class="col-md-10">
+        <div class="tab-content" id="myTabContent">
+            <div class="tab-pane fade show active" id="general" role="tabpanel" aria-labelledby="home-tab">
+                <div class="card card-body border border-2 cardWrap">
+                    <div class="container-fluid">
+                        <br>
+
+                        <div class="card card-body border border-2">
+                            <div class="card-title">
+                                <form method="POST" action="" enctype="multipart/form-data">
+
+                                    <div class="d-flex flex-row-reverse">
+                                        <div class="col col-lg-3">
+                                            <!-- href="{% url 'student_education_dashboard' }" -->
+                                            <a type="button" class="btn btn-secondary" href="{% url 'student_dashboard' application_id %}"
+                                                style="background-color: #23384e;" name="cancel" value="Cancel" onclick="return confirm('Είστε σίγουρος;');">
+                                                <i class="bi bi-x-circle-fill"></i>
+                                                Ακύρωση </a>
+                                        </div>
+                                        <div class="col col-lg-3">
+
+                                            <button class="btn btn-secondary " style="background-color: #23384e;"
+                                                type="submit"><i class="bi bi-sd-card-fill"></i> Αποθήκευση</button>
+
+                                        </div>
+                                        {% if form.instance.id %}
+                                        <div class="col col-lg-3">
+                                            <button class="btn btn-secondary" type="submit"
+                                                style="background-color: #23384e;" name="delete" value="Delete" onclick="return confirm('Είστε σίγουρος;');">
+                                                <i class="bi bi-x-circle-fill"></i>
+                                                Διαγραφή </button>
+                                        
+                                       
+
+                                        </div>
+                                        {% endif %}
+                                    </div>
+                                    <h5>Ξένες Γλώσσες</h5>
+                                    <hr>
+                            </div>
+
+                            {% if form.errors %}
+                            {% for field in form %}        
+                            {% for error in field.errors %}
+                            <div class="alert alert-danger">
+                                <strong>{{ error|escape }}</strong>
+                            </div>
+                            {% endfor %}
+                            {% endfor %}
+                            {% endif %}
+                            {% csrf_token %}
+                            {{form.media}}
+                            {{form}}
+                            <br />
+
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+{% endblock %}

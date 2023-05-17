@@ -1,0 +1,81 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+
+{% load bootstrap5 %}
+
+{% for message in messages %}
+
+  <div class="alert {{ message.tags }} m-2" role="alert" id="msg">
+    {{ message|safe  }}
+  </div>
+{% endfor %}
+
+
+
+    <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
+      <div class="carousel-inner">
+        <div class="carousel-item active">
+          <img class="mySlides" src="{% static 'images/backround1.jpg'%}"  style="width: 40%">
+
+          <!-- <div class="carousel-caption d-none d-md-block">
+              <h5 style="color:#505F7D; background:#D1DEE6; width:500px; align: center;">Harokopio's University Facility</h5>
+
+            </div> -->
+
+        </div>
+
+
+
+        <div class="carousel-item">
+          <img class="mySlides" src="{% static 'images/car3.jpg'%}"  style="width: 40%">
+<!--
+          <div class="carousel-caption d-none d-md-block">
+              <h5 style="color:#505F7D; background:#D1DEE6; width:500px; align: center;">Nutricion</h5>
+
+            </div> -->
+
+        </div>
+        <div class="carousel-item">
+          <img class="mySlides" src="{% static 'images/car4.jpg'%}"  style="width: 40%">
+        </div>
+        <div class="carousel-item">
+            <img class="mySlides" src="{% static 'images/car5.jpg'%}"  style="width: 40%">
+
+        </div>
+
+    </div>
+
+      <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="sr-only">Previous</span>
+      </a>
+      <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="sr-only">Next</span>
+      </a>
+    </div>
+
+
+
+
+    <div class="container-fluid">
+      <div class="jumbotron" style="text-align: center;">
+      <br>
+      <h3>ΤΟ ΠΑΝΕΠΙΣΤΗΜΙΟ ΜΑΣ</h3>
+      <p> Το Χαροκόπειο Πανεπιστήμιο ιδρύθηκε το 1990 και εδράζεται σε κληροδότημα του Εθνικού Ευεργέτη Παναγή Χαροκόπου.
+   Διαθέτει Πανεπιστημιακά Τμήματα και Προγράμματα Σπουδών ιδιαίτερης φυσιογνωμίας στον ελληνικό χώρο, άρτιες κτιριακές και τεχνολογικές υποδομές και υψηλό επίπεδο ερευνητικού έργου και διεθνούς παρουσίας που διασφαλίζουν ποιοτικό ακαδημαϊκό περιβάλλον για τους φοιτητές του.
+   Ταυτόχρονα, μεριμνά ιδιαίτερα για την επαγγελματική αποκατάσταση των αποφοίτων του και την πολύπλευρη σύνδεσή του με την κοινωνία. Αποτελέιται από τέσσερα τμήματα :
+   <ul>
+     <li>Τμήμα Πληροφορικής και Τηλεματικής</li>
+     <li>Τμήμα Διατροφής και Διαιτολογίας</li>
+     <li>Τμήμα Οικιακής Οικονομίας</li>
+     <li>Τμήμα Γεωγραφίας</li>
+   </ul>
+   </p>
+</div>
+</div>
+{% endblock %}

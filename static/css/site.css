@@ -1,0 +1,184 @@
+/* body,html{
+  height :100%;
+  margin: 0;
+}
+
+
+.background{
+  	background: url('../images/backround1.jpg');
+    filter: blur(8px);
+ -webkit-filter: blur(8px);
+  height: 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+} */
+html {
+  margin: 0;
+  height: 100%;
+}
+/* #container {
+
+  overflow: auto;
+  padding-bottom: 250px;
+}  */
+
+body {
+  font-family: Open Sans, sans-serif;
+  /* position: relative; */
+  margin: 0;
+  padding: 0;
+  padding-top: 100px;
+
+  height: 100%;
+  display: flex;
+  flex-direction: column;  
+
+}
+
+
+/* #content{
+  position: relative; 
+  
+  margin: 0;
+  padding: 0;
+  padding-top: 70px;
+  display: flex;
+  flex-direction: column;
+  align-content: flex-end;
+  min-height : 100%;
+} */
+
+.header {
+  position: sticky; /* Set the navbar to fixed position */
+  top: 0; /* Position the navbar at the top of the page */
+}
+
+
+footer {
+  /* position: fixed;  */
+  /* fixed makes it stay at bottom */
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  text-align: center;
+  padding: 0;
+  
+  
+}
+
+.navbar-nav .nav-link  {
+  color: white ;
+}
+nav .navbar-nav li a{
+color: white !important;
+}
+nav .navbar-nav li a:hover{
+  background-color: rgb(124, 124, 124);
+  }
+li a:hover {
+ background-color: #4875af;
+
+
+margin: auto;
+}
+
+/*for burger icon*/
+.navbar-toggler-icon {
+      background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 32 32' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba(255,255,255, 1)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 8h24M4 16h24M4 24h24'/%3E%3C/svg%3E");
+}
+
+
+.nav-item > a:hover {
+background-color: #71717191;
+color: black;
+font-weight: bold;
+}
+
+.dropdown-menu > a:hover {
+background-color: #e4e6eb;
+}
+/*.active {
+background-color: #4CAF50;
+}*/
+
+.nav-tabs .nav-item .nav-link.active {
+color: #0080FF;
+}
+
+/* img logo settings */
+
+
+.navbar-brand img {
+height: 50px;
+/* put value of image height as your need */
+float: left;
+margin-right: 7px;
+}
+
+
+
+.img-hover-zoom {
+height: auto; /* [1.1] Set it as per your need */
+overflow: hidden; /* [1.2] Hide the overflowing of child elements */
+}
+
+/* [2] Transition property for smooth transformation of images */
+.img-hover-zoom img {
+transition: transform .5s ease;
+}
+
+/* [3] Finally, transforming the image when container gets hovered */
+.img-hover-zoom:hover img {
+transform: scale(1.05);
+}
+
+
+span navbar-toggler-icon:hover {
+transform: scale(1.05);
+}
+
+
+
+
+
+/* ScrollBar */
+/* width */
+::-webkit-scrollbar {
+width: 11px;
+
+
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+background: #364968; 
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+background: #505255; 
+border-radius: 5px 5px 5px 5px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+background: #8b8e92; 
+}
+.user_card {
+  width: 350px;
+  margin-top: 20px;
+  margin-bottom: auto;
+  background: #707172;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  padding: 10px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  -webkit-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  -moz-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  border-radius: 5px;
+
+}
+

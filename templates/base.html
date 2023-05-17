@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+{% load static %}
+{% load bootstrap5 %}
+<html lang="el" dir="ltr">
+ <head>
+  <title>{% block title %}Σύστημα Διαχείρησης Mεπτυχιακών{% endblock %}</title>
+  <link rel="icon" href="https://www.hua.gr/templates/lt_storage/favicon.ico">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+ <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+<link rel="stylesheet" href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css'>
+ <!--Bootstrap-->
+ <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+ <!-- Bootstrap Icons -->
+ <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
+ <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/dataTables.bootstrap4.min.css">
+
+  <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script> to uncomment -->
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+
+   <!-- multi step form -->
+   <!-- <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    -->
+   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous"> 
+ <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+   
+   
+     <!-- end multistep -->
+     <!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>  to uncomment-->
+
+     {# jQuery #}
+     <!-- <script src="http://code.jquery.com/jquery-2.0.3.min.js"></script>  to uncomment-->
+  
+     {# datatables.js #}
+     <script type="text/javascript" charset="utf8" src="http://cdn.datatables.net/1.10.9/js/jquery.dataTables.min.js"></script>
+     <link rel="stylesheet" type="text/css" href="http://cdn.datatables.net/1.10.9/css/jquery.dataTables.css">
+  
+    
+     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/js/bootstrap-datepicker.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/css/bootstrap-datepicker3.css"/>
+
+
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+
+
+
+<!-- for dragable table start -->
+<link href="https://unpkg.com/bootstrap-table@1.21.0/dist/bootstrap-table.min.css" rel="stylesheet">
+<link href="https://unpkg.com/bootstrap-table@1.21.0/dist/extensions/reorder-rows/bootstrap-table-reorder-rows.css" rel="stylesheet">
+
+<script src="https://cdn.jsdelivr.net/npm/tablednd@1.0.5/dist/jquery.tablednd.min.js"></script>
+<script src="https://unpkg.com/bootstrap-table@1.21.0/dist/bootstrap-table.min.js"></script>
+<script src="https://unpkg.com/bootstrap-table@1.21.0/dist/extensions/reorder-rows/bootstrap-table-reorder-rows.min.js"></script>
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<!------ Include the above in your HEAD tag ---------->
+      
+     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js" integrity="sha256-T0Vest3yCU7pafRw9r+settMBX6JkKN06dqBnpQ8d30=" crossorigin="anonymous"></script>
+
+<!-- for dragable table end -->
+
+
+<link rel="stylesheet" href="{% static 'css/site.css '%}"/>
+    <title></title>
+  </head> 
+ 
+  <body >
+<style>
+
+.myNavbar > li{
+padding-left:30px;
+padding-right:30px;
+color: #DEE7E7;
+
+}
+
+.navbar-nav li  a{
+color:#DEE7E7;
+}
+
+.navbar-nav > li{
+padding-left:30px;
+padding-right:30px;
+}
+
+.intro{
+background-color:  #87A5C2;
+height: 170px;
+width: 100%;
+text-align: center;
+}
+
+.dropdown ul {
+  background-color: #37393D;
+}
+
+.form-elegant .font-small {
+    font-size: 0.8rem; }
+
+.form-elegant .z-depth-1a {
+    -webkit-box-shadow: 0 2px 5px 0 rgba(55, 161, 255, 0.26), 0 4px 12px 0 rgba(121, 155, 254, 0.25);
+    box-shadow: 0 2px 5px 0 rgba(55, 161, 255, 0.26), 0 4px 12px 0 rgba(121, 155, 254, 0.25); }
+
+.form-elegant .z-depth-1-half,
+.form-elegant .btn:hover {
+    -webkit-box-shadow: 0 5px 11px 0 rgba(85, 182, 255, 0.28), 0 4px 15px 0 rgba(36, 133, 255, 0.15);
+    box-shadow: 0 5px 11px 0 rgba(85, 182, 255, 0.28), 0 4px 15px 0 rgba(36, 133, 255, 0.15); }
+
+
+ .form-elegant .modal-header {
+    border-bottom: none;
+}
+
+.form-elegant .modal-body, .form-elegant .modal-footer {
+    font-weight: 400;
+   }
+
+#modalBody{
+    background-color: #313233;
+}
+
+
+/* .btn{
+  border-radius: 50%;
+  color:  #dceaf7;
+  background-color: #5f7c99;
+} */
+
+
+.modal-content{
+  color: #dceaf7;
+  /* background-color: #5f7c99; */
+    background-color: #313233;
+}
+
+.href-color{
+  color: #dceaf7;
+}
+
+
+.jumbotron > ul {
+  text-align: left;
+   display: inline-block;
+   position: relative;
+
+
+}
+
+.mySlides{
+display: block;
+margin-left: auto;
+margin-right: auto;
+width: 50%;
+/* height: 40%; */
+max-height: 300px;
+min-height: 300px;
+}
+
+
+/* style for pop up login form */
+
+/* body {
+  font-family: Arial, Helvetica, sans-serif;
+  background: #0F345C;
+  background: -webkit-linear-gradient(bottom right, #0F345C, #FFFFFF);
+  background: -moz-linear-gradient(bottom right, #0F345C, #FFFFFF);
+  background: linear-gradient(to top left, #0F345C, #FFFFFF);
+} */
+
+/* Full-width input fields */
+/* input[type=text], input[type=password] ,input[type=email]{
+  width: 100%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+} */
+
+/* Set a style for all buttons */
+button {
+  background-color: #4CAF50;
+  color: white;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+}
+
+button:hover {
+  opacity: 0.8;
+}
+
+/* Extra styles for the cancel button */
+.cancelbtn {
+  width: auto;
+  padding: 10px 18px;
+  background-color: #f44336;
+}
+
+/* Center the image and position the close button */
+.imgcontainer {
+  text-align: center;
+  margin: 24px 0 12px 0;
+  position: relative;
+}
+
+img.avatar {
+  width: 40%;
+  border-radius: 50%;
+}
+
+.container {
+  padding: 16px;
+}
+
+span.psw {
+  float: right;
+  padding-top: 16px;
+}
+
+/* The Modal (background) */
+.modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+  padding-top: 60px;
+}
+
+/* Modal Content/Box */
+.modal-content {
+  background-color: #fefefe;
+  margin: 5% auto 15% auto; /* 5% from the top, 15% from the bottom and centered */
+  border: 1px solid #888;
+  width: 80%; /* Could be more or less, depending on screen size */
+}
+
+/* The Close Button (x) */
+.close {
+  position: absolute;
+  right: 25px;
+  top: 0;
+  color: #000;
+  font-size: 35px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: red;
+  cursor: pointer;
+} 
+
+/* Add Zoom Animation */
+.animate {
+  -webkit-animation: animatezoom 0.6s;
+  animation: animatezoom 0.6s
+}
+
+@-webkit-keyframes animatezoom {
+  from {-webkit-transform: scale(0)}
+  to {-webkit-transform: scale(1)}
+}
+
+@keyframes animatezoom {
+  from {transform: scale(0)}
+  to {transform: scale(1)}
+}
+
+/* Change styles for span and cancel button on extra small screens */
+@media screen and (max-width: 300px) {
+  span.psw {
+     display: block;
+     float: none;
+  }
+  .cancelbtn {
+     width: 100%;
+  }
+}
+
+</style>
+<!-- <div class="intro">
+<div class="container-fluid">
+
+  <img src="{% static 'images/logo.png' %}" alt="Logo" style="width:300px;" ></a>
+
+  <br>
+
+  <h3>Welcome to Harokopio's University Postgraduate Site</h3>
+  <p>Here you'll find all the information you need about our programs</p>
+  <p>To make an application you have to be logged in</p>
+
+</div>
+</div> -->
+  <nav class="navbar navbar-expand-sm bg-dark navbar-dark fixed-top">
+
+      <a class="navbar-brand"  href="{% url 'home' %}" >
+      <img src="{% static 'images/logo.png' %}" alt="Logo" style="width:250px;"></a>
+
+<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+   <span class="navbar-toggler-icon"></span>
+</button>
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav ml-auto">
+        <li class="nav-item"><a  href="{% url 'home' %}"><svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-house-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+  <path fill-rule="evenodd" d="M8 3.293l6 6V13.5a1.5 1.5 0 0 1-1.5 1.5h-9A1.5 1.5 0 0 1 2 13.5V9.293l6-6zm5-.793V6l-2-2V2.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5z"/>
+  <path fill-rule="evenodd" d="M7.293 1.5a1 1 0 0 1 1.414 0l6.647 6.646a.5.5 0 0 1-.708.708L8 2.207 1.354 8.854a.5.5 0 1 1-.708-.708L7.293 1.5z"/>
+</svg>Αρχική</a></li>
+<li class="nav-item">  <a style="float:right"  href="{% url 'contact' %}"><i class="bi bi-envelope"></i> Επικοινωνήστε </a></li>
+        {% if user.is_authenticated %}
+        {% ifequal user.groups.all.0.name 'students' %}
+          <li class="nav-item">  <a style="float:right"  href="{% url 'departments' %}"><svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-file-earmark-plus-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+            <path fill-rule="evenodd" d="M2 2a2 2 0 0 1 2-2h5.293A1 1 0 0 1 10 .293L13.707 4a1 1 0 0 1 .293.707V14a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V2zm7.5 1.5v-2l3 3h-2a1 1 0 0 1-1-1zM8.5 7a.5.5 0 0 0-1 0v1.5H6a.5.5 0 0 0 0 1h1.5V11a.5.5 0 0 0 1 0V9.5H10a.5.5 0 0 0 0-1H8.5V7z"/>
+        </svg> Διαθέσιμες Προσκλήσεις</a></li>
+        
+          <li class="nav-item">  <a style="float:right" href="{% url 'profile' %}"><svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-person-circle" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+            <path d="M13.468 12.37C12.758 11.226 11.195 10 8 10s-4.757 1.225-5.468 2.37A6.987 6.987 0 0 0 8 15a6.987 6.987 0 0 0 5.468-2.63z"/>
+            <path fill-rule="evenodd" d="M8 9a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
+            <path fill-rule="evenodd" d="M8 1a7 7 0 1 0 0 14A7 7 0 0 0 8 1zM0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8z"/>
+          </svg>Το προφίλ μου</a></li>
+          
+          <li class="nav-item">  <a style="float:right"  href="{% url 'my_applications' %}"><i class="bi bi-file-earmark-check"></i> Οι Αιτήσεις μου </a></li>
+        {% endifequal %}
+        {% ifequal user.groups.all.0.name 'professors' %}
+    
+        <li class="nav-item">  <a style="float:right"  href="{% url 'departments' %}"><svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-file-earmark-plus-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+          <path fill-rule="evenodd" d="M2 2a2 2 0 0 1 2-2h5.293A1 1 0 0 1 10 .293L13.707 4a1 1 0 0 1 .293.707V14a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V2zm7.5 1.5v-2l3 3h-2a1 1 0 0 1-1-1zM8.5 7a.5.5 0 0 0-1 0v1.5H6a.5.5 0 0 0 0 1h1.5V11a.5.5 0 0 0 1 0V9.5H10a.5.5 0 0 0 0-1H8.5V7z"/>
+      </svg> Οι Διαθέσιμες Προσκλήσεις Μου</a></li>
+       {% endifequal %}
+
+          <li class="nav-item">  <a href="{% url 'logout' %}"><svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-box-arrow-right" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+            <path fill-rule="evenodd" d="M10 12.5a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v2a.5.5 0 0 0 1 0v-2A1.5 1.5 0 0 0 9.5 2h-8A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-2a.5.5 0 0 0-1 0v2z"/>
+            <path fill-rule="evenodd" d="M15.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 0 0-.708.708L14.293 7.5H5.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3z"/>
+          </svg>Αποσύνδεση</a></li>
+         {% else %}
+         <li class="nav-item"><a  href="{% url 'signup' %}"><svg class="bi bi-person-fill" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+             <path fill-rule="evenodd" d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3zm5-6a3 3 0 100-6 3 3 0 000 6z" clip-rule="evenodd"/>
+           </svg>Εγγραφή</a>
+         </li>
+
+        <li class="nav-item"><a  href="{% url 'user_login' %}"><svg class="bi bi-box-arrow-in-right" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+          <path fill-rule="evenodd" d="M8.146 11.354a.5.5 0 010-.708L10.793 8 8.146 5.354a.5.5 0 11.708-.708l3 3a.5.5 0 010 .708l-3 3a.5.5 0 01-.708 0z" clip-rule="evenodd"/>
+          <path fill-rule="evenodd" d="M1 8a.5.5 0 01.5-.5h9a.5.5 0 010 1h-9A.5.5 0 011 8z" clip-rule="evenodd"/>
+          <path fill-rule="evenodd" d="M13.5 14.5A1.5 1.5 0 0015 13V3a1.5 1.5 0 00-1.5-1.5h-8A1.5 1.5 0 004 3v1.5a.5.5 0 001 0V3a.5.5 0 01.5-.5h8a.5.5 0 01.5.5v10a.5.5 0 01-.5.5h-8A.5.5 0 015 13v-1.5a.5.5 0 00-1 0V13a1.5 1.5 0 001.5 1.5h8z" clip-rule="evenodd"/>
+          </svg> Σύνδεση</a>
+        </li>
+
+  </li>
+{% endif %}
+
+    </ul>
+   </div>
+  </nav>
+
+<div id="container">
+    {% block content %}
+    {% endblock %}
+  </div>
+
+<footer class="page-footer font-small mdb-color pt-4" style="background-color: #37393D;">
+  <div class="container text-center text-md-left" style="color:  #DEE7E7;">
+    <div class="row text-center text-md-left mt-3 pb-3">
+      <div class="col-md-3 col-lg-3 col-xl-3 mx-auto mt-3" >
+        <h6 class="text-uppercase mb-4 font-weight-bold">Χαροκόπειο Πανεπιστήμιο</h6>
+        <p>Το Τμήμα ιδρύθηκε το 2006 με στόχο να προωθήσει την Επιστήμη της Πληροφορικής, 
+          πρωτίστως στον τομέα των διαδικτυακών/τηλεματικών εφαρμογών, 
+          των μεγάλων δεδομένων, της μηχανικής μάθησης και των δικτυοκεντρικών εφαρμογών.</p>
+      </div>
+
+      <hr class="w-100 clearfix d-md-none">
+
+      <div class="col-md-3 col-lg-2 col-xl-2 mx-auto mt-3">
+        <h6 class="text-uppercase mb-4 font-weight-bold">Χρήσιμα Links</h6>
+        {% if user.is_authenticated %}
+          {% ifequal user.groups.all.0.name 'students' %}
+          <p><a href="{% url 'departments' %}" class="href-color"> Διαθέσιμες Προσκλήσεις</a></p> 
+        
+          <p><a href="{% url 'profile' %}" class="href-color">Το προφίλ μου</a></p>
+          
+          <p><a href="{% url 'my_applications' %}" class="href-color"> Οι Αιτήσεις μου </a></p>
+          {% endifequal %}
+          {% ifequal user.groups.all.0.name 'professors' %}
+    
+          <p><a  href="{% url 'departments' %}" class="href-color"> Οι Διαθέσιμες Προσκλήσεις Μου</a></p>
+          {% endifequal %}
+
+          <p><a href="{% url 'logout' %}" class="href-color">Αποσύνδεση</a></p>
+        {% else %}
+        <p>
+          <a href="{% url 'signup' %}" class="href-color">Εγγραφή</a>
+        </p>
+        <p>
+          <a href="{% url 'user_login' %}" class="href-color">Σύνδεση</a>
+        </p>
+        {% endif %}
+         <p>
+          <a  href="{% url 'contact' %}" class="href-color">Επικοινωνήστε </a>
+        </p> 
+        
+      </div>
+      <hr class="w-100 clearfix d-md-none">
+      <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mt-3">
+        <h6 class="text-uppercase mb-4 font-weight-bold">Επικοινωνία</h6>
+        <p>
+        <i class="fa fa-map-marker fa-lg" aria-hidden="true"></i> Ελευθερίου Βενιζέλου 70, Καλλιθέα-Αττικής, ΤΚ 176 71</p>
+        <p>
+          <i class="fa fa-envelope" aria-hidden="true"></i> evangelianiavi@gmail.com</p>
+        <p>
+          <i class="fa fa-mobile fa-lg" aria-hidden="true"></i> 6976946010</p>
+      </div>
+    </div>
+    <hr>
+    <div class="row d-flex align-items-center">
+
+
+      <div class="col-md-7 col-lg-8">
+
+
+        <p class="text-center text-md-left">© 2023 Copyright:
+          <a href="https://www.facebook.com/eva.niavi/">
+            <strong> Evangelia Niavi</strong>
+          </a>
+        </p>
+
+      </div>
+
+    </div>
+  </div>
+</footer>
+
+<!-- optional JavaScript -->
+<script src="{% static 'js/keeptab.js' %}"></script> 
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.min.js" integrity="sha384-Atwg2Pkwv9vp0ygtn1JAojH0nYbwNJLPhwyoVbhoPwBhjQPR5VtM2+xf0Uwh9KtT" crossorigin="anonymous"></script>
+
+<script>
+  $(document).ready(function(){
+    $('button[data-bs-toggle="tab"]').on('show.bs.tab', function(e) {
+        localStorage.setItem('activeTab', $(e.target).attr('href'));
+    });
+    var activeTab = localStorage.getItem('activeTab');
+    if(activeTab){
+        $('#nav-tab button[href="' + activeTab + '"]').tab('show');
+    }
+});
+</script>
+
+  </body>
+</html>

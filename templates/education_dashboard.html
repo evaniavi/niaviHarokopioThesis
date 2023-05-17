@@ -1,0 +1,1486 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+{% load crispy_forms_tags %}
+<style>
+    #myTable td:hover {
+        cursor: move;
+    }
+
+    * {
+        margin: 0;
+        padding: 0
+    }
+
+    html {
+        height: 100%
+    }
+
+    /* #9C27B0 */
+    #grad1 {
+        /* 
+        background: #0F345C;
+        background: -webkit-linear-gradient(bottom right, #0F345C, #FFFFFF);
+        background: -moz-linear-gradient(bottom right, #0F345C, #FFFFFF);
+        background: linear-gradient(to top left, #0F345C, #FFFFFF); */
+
+        /* Created with https://www.css-gradient.com */
+        /* background: #FDFDFD;
+        background: -webkit-linear-gradient(top left, #FDFDFD, #497582);
+        background: -moz-linear-gradient(top left, #FDFDFD, #497582);
+        background: linear-gradient(to bottom right, #FDFDFD, #497582); */
+
+        /* Created with https://www.css-gradient.com */
+        background: #FFFFFF;
+        background: -webkit-linear-gradient(top, #FFFFFF, #9D9D9D);
+        background: -moz-linear-gradient(top, #FFFFFF, #9D9D9D);
+        background: linear-gradient(to bottom, #FFFFFF, #9D9D9D);
+    }
+
+    #msform {
+        text-align: center;
+        position: relative;
+        margin-top: 20px
+    }
+
+    #msform fieldset .form-card {
+        background: white;
+        border: 0 none;
+        border-radius: 0px;
+        box-shadow: 0 2px 2px 2px rgba(0, 0, 0, 0.2);
+        padding: 20px 40px 30px 40px;
+        box-sizing: border-box;
+        width: 94%;
+        margin: 0 3% 20px 3%;
+        position: relative
+    }
+
+    #msform fieldset {
+        background: white;
+        border: 0 none;
+        border-radius: 0.5rem;
+        box-sizing: border-box;
+        width: 100%;
+        margin: 0;
+        padding-bottom: 20px;
+        position: relative
+    }
+
+    #msform fieldset:not(:first-of-type) {
+        display: none
+    }
+
+    #msform fieldset .form-card {
+        text-align: left;
+        color: #9E9E9E
+    }
+
+    #msform input,
+    #msform textarea {
+        padding: 0px 8px 4px 8px;
+        border: none;
+        border-bottom: 1px solid #ccc;
+        border-radius: 0px;
+        margin-bottom: 25px;
+        margin-top: 2px;
+        width: 100%;
+        box-sizing: border-box;
+        font-family: montserrat;
+        color: #2C3E50;
+        font-size: 16px;
+        letter-spacing: 1px
+    }
+
+    #msform input:focus,
+    #msform textarea:focus {
+        -moz-box-shadow: none !important;
+        -webkit-box-shadow: none !important;
+        box-shadow: none !important;
+        border: none;
+        font-weight: bold;
+        border-bottom: 2px solid skyblue;
+        outline-width: 0
+    }
+
+    #msform .action-button {
+        width: 100px;
+        background: skyblue;
+        font-weight: bold;
+        color: white;
+        border: 0 none;
+        border-radius: 0px;
+        cursor: pointer;
+        padding: 10px 5px;
+        margin: 10px 5px
+    }
+
+    #msform .action-button:hover,
+    #msform .action-button:focus {
+        box-shadow: 0 0 0 2px white, 0 0 0 3px skyblue
+    }
+
+    #msform .action-button-previous {
+        width: 100px;
+        background: #616161;
+        font-weight: bold;
+        color: white;
+        border: 0 none;
+        border-radius: 0px;
+        cursor: pointer;
+        padding: 10px 5px;
+        margin: 10px 5px
+    }
+
+    #msform .action-button-previous:hover,
+    #msform .action-button-previous:focus {
+        box-shadow: 0 0 0 2px white, 0 0 0 3px #616161
+    }
+
+    select.list-dt {
+        border: none;
+        outline: 0;
+        border-bottom: 1px solid #ccc;
+        padding: 2px 5px 3px 5px;
+        margin: 2px
+    }
+
+    select.list-dt:focus {
+        border-bottom: 2px solid skyblue
+    }
+
+    .card {
+        z-index: 0;
+        border: none;
+        border-radius: 0.5rem;
+        position: relative
+    }
+
+    .fs-title {
+        font-size: 25px;
+        color: #2C3E50;
+        margin-bottom: 10px;
+        font-weight: bold;
+        text-align: left
+    }
+
+    #progressbar {
+        margin-bottom: 30px;
+        overflow: hidden;
+        color: lightgrey
+    }
+
+    #progressbar .active {
+        color: #000000
+    }
+
+    #progressbar li {
+        list-style-type: none;
+        font-size: 12px;
+        width: 15%;
+        float: left;
+        position: relative
+    }
+
+    #progressbar #account:before {
+        font-family: FontAwesome;
+        content: "\f007"
+    }
+
+    #progressbar #personal:before {
+        font-family: FontAwesome;
+        content: "\f19d"
+
+    }
+
+    #progressbar #payment:before {
+        font-family: FontAwesome;
+        content: "\f0b1"
+    }
+
+    #progressbar #recommendation:before {
+        font-family: bootstrap-icons;
+        content: "\F73A"
+    }
+
+    #progressbar #languages:before {
+        font-family: bootstrap-icons;
+        content: "\F153"
+    }
+
+
+    #progressbar #confirm:before {
+        font-family: bootstrap-icons;
+        content: "\F721"
+        /* content: "\f15c" */
+    }
+
+    #progressbar li:before {
+        width: 50px;
+        height: 50px;
+        line-height: 45px;
+        display: block;
+        font-size: 18px;
+        color: #ffffff;
+        background: lightgray;
+        border-radius: 50%;
+        margin: 0 auto 10px auto;
+        padding: 2px
+    }
+
+    #progressbar li:after {
+        content: '';
+        width: 100%;
+        height: 2px;
+        background: lightgray;
+        position: absolute;
+        left: 0;
+        top: 25px;
+        z-index: -1
+    }
+
+    #progressbar li.active:before,
+    #progressbar li.active:after {
+        background: skyblue
+    }
+
+    .radio-group {
+        position: relative;
+        margin-bottom: 25px
+    }
+
+    .radio {
+        display: inline-block;
+        width: 204;
+        height: 104;
+        border-radius: 0;
+        background: lightblue;
+        box-shadow: 0 2px 2px 2px rgba(0, 0, 0, 0.2);
+        box-sizing: border-box;
+        cursor: pointer;
+        margin: 8px 2px
+    }
+
+    .radio:hover {
+        box-shadow: 2px 2px 2px 2px rgba(0, 0, 0, 0.3)
+    }
+
+    .radio.selected {
+        box-shadow: 1px 1px 2px 2px rgba(0, 0, 0, 0.1)
+    }
+
+    .fit-image {
+        width: 100%;
+        object-fit: cover
+    }
+</style>
+
+
+<figure class="text-center">
+    <blockquote class="blockquote">
+        <p>
+        <h2>Εφαρμογή Αιτήσεων Μεταπτυχιακών Προγραμμάτων Χαρακοπείου Πανεπιστημίου</h2>
+        </p>
+    </blockquote>
+    <figcaption class="blockquote-footer">
+        <h5>Καλως Ήρθατε, <cite title="User Title">{{user.username}}</cite></h5>
+    </figcaption>
+</figure>
+
+<!-- Tabs  -->
+<ul class="nav nav-tabs justify-content-center" id="nav-tab" role="tablist">
+    <li class="nav-item" role="presentation">
+        <button class="nav-link active" id="general-tab" data-bs-toggle="tab" data-bs-target="#general" type="button"
+            role="tab" aria-controls="general" aria-selected="true" href="#general"><i class="bi bi-person-circle"></i>
+            Γενικές Πληροφορίες</button>
+    </li>
+    <li class="nav-item" role="presentation">
+        <button class="nav-link" id="education-tab" data-bs-toggle="tab" data-bs-target="#education" type="button"
+            role="tab" aria-controls="education" aria-selected="false" href="#education"><i
+                class="bi bi-mortarboard-fill"></i> Εκπαίδευση</button>
+    </li>
+    <li class="nav-item" role="presentation">
+        <button class="nav-link" id="job-tab" data-bs-toggle="tab" data-bs-target="#job" type="button" role="tab"
+            aria-controls="job" aria-selected="false" href="#job"><i class="bi bi-briefcase-fill"></i> Εμπειρία</button>
+    </li>
+    <li class="nav-item" role="presentation">
+        <button class="nav-link" id="travel-tab" data-bs-toggle="tab" data-bs-target="#travel" type="button" role="tab"
+            aria-controls="travel" aria-selected="false" href="#travel"><i class="bi bi-envelope-paper-fill"></i>
+            Συστατικές Επιστολές</button>
+    </li>
+    <li class="nav-item" role="presentation">
+        <button class="nav-link" id="travel-tab" data-bs-toggle="tab" data-bs-target="#languages" type="button"
+            role="tab" aria-controls="languages" aria-selected="false" href="#languages"><i
+                class="bi bi-award-fill"></i> Ξένες Γλώσσες</button>
+    </li>
+    <li class="nav-item" role="presentation">
+        <button class="nav-link" id="travel-tab" data-bs-toggle="tab" data-bs-target="#additional" type="button"
+            role="tab" aria-controls="additional" aria-selected="false" href="#additional"><i
+                class="bi bi-clipboard-plus-fill"></i>
+            Επιπρόσθετες Πληροφορίες</button>
+    </li>
+    {% if edit %}
+    <li class="nav-item" role="presentation">
+        <button class="nav-link" id="travel-tab" data-bs-toggle="tab" data-bs-target="#preview" type="button" role="tab"
+            aria-controls="preview" aria-selected="false" href="#preview"><i class="bi bi-send-check-fill"></i>
+            Προεπισκόπηση και Υποβολή</button>
+    </li>
+    {% endif %}
+    {% if not edit %}
+    <li class="nav-item" role="presentation">
+        <button class="nav-link" id="travel-tab" data-bs-toggle="tab" data-bs-target="#last" type="button" role="tab"
+            aria-controls="last" aria-selected="last" href="#preview"><i class="bi bi-send-check-fill"></i>
+            Προεπισκόπηση </button>
+            
+    </li>
+    {% endif %}
+</ul>
+
+
+
+
+
+<!-- Tabs Content -->
+<div class="tab-content" id="nav-tabContent">
+
+
+
+    <!-- General tab -->
+    <div class="tab-pane fade show active" id="general" role="tabpanel" aria-labelledby="nav-general-tab">
+        <div class="container">
+            <div class="tab-pane fade show active" id="general" role="tabpanel" aria-labelledby="general-tab">
+                <div class="card card-body border border-2 cardWrap">
+                    <div class="container-fluid">
+                        <br>
+                        <div class="card card-body border border-2">
+
+                            <div class="card-title">
+                                <div class="d-flex flex-row-reverse">
+                                    <div class="col col-lg-3">
+                                        {% if edit %}
+                                        <a class="btn btn-secondary" href="{% url 'edit_basic_info' application_id %}"
+                                            style="background-color: #23384e;">
+                                            <i class="bi bi-pencil-fill"></i>
+                                            Επεξεργασία </a>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                <h5> <i class="bi bi-person-circle"></i> Βασικές Πληροφορίες</h5>
+                                <hr>
+                            </div>
+                            {% if form.errors %}
+                            {% for field in form %}
+                            {% for error in field.errors %}
+                            <div class="alert alert-danger">
+                                <strong>{{ error|escape }}</strong>
+                            </div>
+                            {% endfor %}
+                            {% endfor %}
+                            {% endif %}
+                            <div class="container">
+                                <div class="row justify-content-start">
+                                    <div class="col-3">
+                                        <strong> <label for="your_name">Όνομα: </label></strong>
+                                    </div>
+                                    <div class="col-9">
+                                        <label>{{ name }} </label>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div class="container">
+                                <div class="row justify-content-start">
+                                    <div class="col-3">
+                                        <strong> <label for="your_name">Επίθετο: </label></strong>
+                                    </div>
+                                    <div class="col-9">
+                                        <label>{{ surname }} </label>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="container">
+                                <div class="row justify-content-start">
+                                    <div class="col-3">
+                                        <strong><label for="your_name">Όνομα Πατέρα: </label></strong>
+                                    </div>
+                                    <div class="col-9">
+                                        <label>{{ fatherName }} </label>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="container">
+                                <div class="row justify-content-start">
+                                    <div class="col-3">
+                                        <strong> <label for="your_name">Όνομα Μητέρας: </label></strong>
+                                    </div>
+                                    <div class="col-9">
+                                        <label>{{ motherName }} </label>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="container">
+                                <div class="row justify-content-start">
+                                    <div class="col-3">
+                                        <strong> <label for="your_name">Αριθμός Φορολογικού Μητρώου(ΑΦΜ): </label>
+                                        </strong>
+                                    </div>
+                                    <div class="col-9">
+                                        <label>{{ afm }} </label>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="container">
+                                <div class="row justify-content-start">
+                                    <div class="col-3">
+                                        <strong> <label for="your_name">Ημερομηνία Γέννησης: </label> </strong>
+                                    </div>
+                                    <div class="col-9">
+                                        <label>{{ birth_date }} </label>
+                                    </div>
+
+                                </div>
+                            </div>
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+    <!-- education Tab -->
+    <div class="tab-pane fade" id="education" role="tabpanel" aria-labelledby="education-tab">
+        <div class="card card-body border border-2 cardWrap">
+            <div class="container-fluid">
+                <a class="btn btn-secondary" data-bs-toggle="collapse" href="#collapseFilter" role="button"
+                    aria-expanded="false" aria-controls="collapseFilter">
+                    <i class="bi bi-funnel"></i> Κριτήρια Αναζήτησης
+                </a>
+                <br>
+
+                <div class="card collapse" id="collapseFilter">
+                    <div class="card card-body border border-2">
+                        <form class="filterform" method="get">
+                            <!-- {{ fundFilter.form|crispy }}
+                            <br>
+                            <button class="btn btn-secondary" type="submit">Αναζήτηση</button> -->
+                        </form>
+                    </div>
+                </div>
+                <br>
+                <div class="card card-body border border-2">
+                    <div class="card-title">
+                        <div class="d-flex flex-row-reverse">
+                            <div class="col col-lg-3">
+                                {% if edit %}
+                                <a class="btn btn-secondary" href="{% url 'create_new_degree' application_id %}"
+                                    style="background-color: #23384e;">
+                                    <i class="bi bi-pencil-fill"></i>
+                                    Προσθήκη </a>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <h5> <i class="bi bi-mortarboard-fill"></i> Εκπαίδευση</h5>
+                        <hr>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table table-striped table-bordered" style="width:100%">
+                            <thead>
+                                <tr>
+                                    <th>Τύπος Πτυχίου</th>
+                                    <th>Όνομα Τμήματος</th>
+                                    <th>Σχολή</th>
+                                    <th>Μέσος Όρος</th>
+                                    <th>Έτος/Αναμενόμενο έτος Αποφοίτησης</th>
+                                    <th>Τίτλος Πτυχιακής</th>
+                                    {% if edit %}
+                                    <th>Επιλογή</th>
+                                    {% endif %}
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for education in student_educations%}
+                                <tr>
+                                    <td>{{education.degree_type}}</td>
+                                    <td>{{education.title}}</td>
+                                    <td>{{education.university}}</td>
+                                    <td>{{education.average}}</td>
+                                    <td>{{education.graduation_year}}</td>
+                                    <td>{{education.thesis_title}}</td>
+
+                                    <!-- <a href="#" target="_blank"><button><i
+                                                            class="bi bi-eye"></i></button></a> -->
+                                    {% if edit %}
+                                    <td> <a class="btn btn-secondary"
+                                            href="{% url 'education_info_details' education.id %}"
+                                            style="background-color: #23384e;">
+                                            <i class="bi bi-eye"></i>
+                                            Επεξεργασία </a>
+                                    </td>
+                                    {% endif %}
+                                </tr>
+                                {% empty %}
+                                <tr>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td>Δεν έχουν προστεθεί πτυχία</td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+
+    <!-- work experience Request Tab -->
+    <div class="tab-pane fade" id="job" role="tabpanel" aria-labelledby="job-tab">
+        <div class="card card-body border border-2 cardWrap">
+            <div class="container-fluid">
+                <a class="btn btn-secondary" data-bs-toggle="collapse" href="#collapseFilter" role="button"
+                    aria-expanded="false" aria-controls="collapseFilter">
+                    <i class="bi bi-funnel"></i> Κριτήρια Αναζήτησης
+                </a>
+                <br>
+
+                <div class="card collapse" id="collapseFilter">
+                    <div class="card card-body">
+                        <form class="filterform" method="get">
+                            <!-- {{ speech_filter.form|crispy }}
+                            <br>
+                            <button class="btn btn-secondary" type="submit">Αναζήτηση</button> -->
+                        </form>
+                    </div>
+                </div>
+                <br>
+
+                <div class="card card-body border border-2">
+                    <div class="card-title">
+                        <div class="d-flex flex-row-reverse">
+                            <div class="col col-lg-3">
+                                {% if edit %}
+                                <a class="btn btn-secondary"
+                                    href="{% url 'create_new_work_experience' application_id %}"
+                                    style="background-color: #23384e;">
+                                    <i class="bi bi-pencil-fill"></i>
+                                    Προσθήκη </a>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <h5> <i class="bi bi-briefcase-fill"></i>Προϋπηρεσία</h5>
+                        <hr>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table table-striped table-bordered" style="width:100%">
+                            <thead>
+                                <tr>
+                                    <th>Τίτλος Εργασίας</th>
+                                    <th>Εργοδότης</th>
+                                    <th>Ημερομηνία Έναρξης</th>
+                                    <th>Ημερομηνία Λήξης</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for experience in work_experience%}
+                                <tr>
+                                    <td>{{experience.job_title}}</td>
+                                    <td>{{experience.employer}}</td>
+                                    <td>{{experience.start_date}}</td>
+                                    <td>{{experience.end_date}}</td>
+
+                                    <!-- <a href="#" target="_blank"><button><i
+                                                            class="bi bi-eye"></i></button></a> -->
+                                    {% if edit %}
+                                    <td> <a class="btn btn-secondary" href="{% url 'job_info_details' experience.id %}"
+                                            style="background-color: #23384e;">
+                                            <i class="bi bi-eye"></i>
+                                            Επεξεργασία </a>
+                                        {% endif %}
+
+                                </tr>
+                                {% empty %}
+                                <tr>
+                                    <td>Δεν βρέθηκαν Πληροφορίες</td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+    <!-- Recommendation Request Tab -->
+    <div class="tab-pane fade" id="travel" role="tabpanel" aria-labelledby="travel-tab">
+        <div class="card card-body border border-2 cardWrap">
+            <div class="container-fluid">
+                <a class="btn btn-secondary" data-bs-toggle="collapse" href="#collapseFilter" role="button"
+                    aria-expanded="false" aria-controls="collapseFilter">
+                    <i class="bi bi-funnel"></i> Κριτήρια Αναζήτησης
+                </a>
+                <br>
+
+                <div class="card collapse" id="collapseFilter">
+                    <div class="card card-body">
+                        <form class="filterform" method="get">
+                            <!-- {{ travel_filter.form|crispy }}
+                            <br>
+                            <button class="btn btn-secondary" type="submit">Αναζήτηση</button> -->
+                        </form>
+                    </div>
+                </div>
+                <br>
+                <div class="card card-body border border-2">
+                    <div class="card-title">
+                        <div class="d-flex flex-row-reverse">
+                            <div class="col col-lg-3">
+                                {% if edit %}
+                                <a class="btn btn-secondary" href="{% url 'create_new_reccomendation' application_id %}"
+                                    style="background-color: #23384e;">
+                                    <i class="bi bi-pencil-fill"></i>
+                                    Προσθήκη </a>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <h5> <i class="bi bi-envelope-paper"></i>Συστατικές Επιστολές</h5>
+                        <hr>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table table-striped table-bordered" style="width:100%">
+                            <thead>
+                                <tr>
+                                    <th>Όνομα</th>
+                                    <th>Επίθετο</th>
+                                    <th>E-mail</th>
+                                    <th>Οργανισμός</th>
+                                    <th>Θέση</th>
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for recommendation in recommendations%}
+                                <tr>
+                                    <td>{{recommendation.recom_name}}</td>
+                                    <td>{{recommendation.recom_surname}}</td>
+                                    <td>{{recommendation.recom_email}}</td>
+                                    <td>{{recommendation.recom_organism}}</td>
+                                    <td>{{recommendation.recom_position}}</td>
+                                    <!-- <a href="#" target="_blank"><button><i
+                                                            class="bi bi-eye"></i></button></a> -->
+                                    {% if edit %}
+                                    <td> <a class="btn btn-secondary"
+                                            href="{% url 'recommendation_details' recommendation.id %}"
+                                            style="background-color: #23384e;">
+                                            <i class="bi bi-eye"></i>
+                                            Επεξεργασία </a>
+                                        {% endif %}
+                                </tr>
+                                {% empty %}
+                                <tr>
+                                    <td>Δεν βρέθηκαν Πληροφορίες</td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- languages Request Tab -->
+    <div class="tab-pane fade" id="languages" role="tabpanel" aria-labelledby="languages-tab">
+        <div class="card card-body border border-2 cardWrap">
+            <div class="container-fluid">
+                <a class="btn btn-secondary" data-bs-toggle="collapse" href="#collapseFilter" role="button"
+                    aria-expanded="false" aria-controls="collapseFilter">
+                    <i class="bi bi-funnel"></i> Κριτήρια Αναζήτησης
+                </a>
+                <br>
+
+                <div class="card collapse" id="collapseFilter">
+                    <div class="card card-body">
+                        <form class="filterform" method="get">
+                            <!-- {{ travel_filter.form|crispy }}
+                        <br>
+                        <button class="btn btn-secondary" type="submit">Αναζήτηση</button> -->
+                        </form>
+                    </div>
+                </div>
+                <br>
+                <div class="card card-body border border-2">
+                    <div class="card-title">
+                        <div class="d-flex flex-row-reverse">
+                            <div class="col col-lg-3">
+                                {% if edit %}
+                                <a class="btn btn-secondary" href="{% url 'create_new_language'  application_id %}"
+                                    style="background-color: #23384e;">
+                                    <i class="bi bi-pencil-fill"></i>
+                                    Προσθήκη </a>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <h5> <i class="bi bi-award"></i>Ξένες Γλώσσες</h5>
+                        <hr>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table table-striped table-bordered" style="width:100%">
+                            <thead>
+                                <tr>
+                                    <th>Γλώσσα</th>
+                                    <th>Επίπεδο</th>
+                                    <th>Όνομα Πτυχίου</th>
+                                    <th>Ημερομηνία Απόκτησης</th>
+                                    <th>Βαθμός</th>
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for language in languages%}
+                                <tr>
+                                    <td>{{language.name}}</td>
+                                    <td>{{language.level}}</td>
+                                    <td>{{language.degree_name}}</td>
+                                    <td>{{language.date_of_acquisition}}</td>
+                                    <td>{{language.score}}</td>
+
+                                    <!-- <a href="#" target="_blank"><button><i
+                                                        class="bi bi-eye"></i></button></a> -->
+                                    {% if edit %}
+                                    <td> <a class="btn btn-secondary" href="{% url 'language_details' language.id %}"
+                                            style="background-color: #23384e;">
+                                            <i class="bi bi-eye"></i>
+                                            Επεξεργασία </a>
+                                        {% endif %}
+                                </tr>
+                                {% empty %}
+                                <tr>
+                                    <td>Δεν βρέθηκαν Πληροφορίες</td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Additional info Request Tab -->
+
+    <div class="tab-pane fade" id="additional" role="tabpanel" aria-labelledby="additional-tab">
+        <div class="card card-body border border-2 cardWrap">
+            <div class="container-fluid">
+                <br>
+                <div class="card card-body border border-2">
+
+                    <div class="card-title">
+                        <div class="d-flex flex-row-reverse">
+                            <div class="col col-lg-3">
+                                {% if edit %}
+                                <a class="btn btn-secondary" href="{% url 'edit_additional_info' application_id %}"
+                                    style="background-color: #23384e;">
+                                    <i class="bi bi-clipboard-plus-fill"></i>
+                                    Επεξεργασία </a>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <h5> <i class="bi bi-clipboard-plus-fill"></i> Επιπρόσθετες Πληροφορίες</h5>
+                        <hr>
+                    </div>
+                    {% if form.errors %}
+                    {% for field in form %}
+                    {% for error in field.errors %}
+                    <div class="alert alert-danger">
+                        <strong>{{ error|escape }}</strong>
+                    </div>
+                    {% endfor %}
+                    {% endfor %}
+                    {% endif %}
+                    <div class="container">
+                        <div class="row justify-content-start">
+
+                            <strong> <label for="Question1">Γιατί επιλέξατε να κάνετε αίτηση σε αυτό το μεταπτυχιακο;
+                                </label></strong>
+
+                        </div>
+                    </div>
+
+                    <div class="container">
+                        <div class="row justify-content-start">
+
+                            <label>{{ reason_of_selection }} </label>
+                        </div>
+                    </div>
+
+                    <div class="container">
+                        <div class="row justify-content-start">
+                            <strong> <label for="your_name">Έχετε κάνει αίτηση σε κάποιο άλλο μεταπτυχιακό και αν ναι σε
+                                    ποιό; </label></strong>
+                        </div>
+                    </div>
+                    <div class="container">
+                        <div class="row justify-content-start">
+                            <label>{{ other_applications }} </label>
+                        </div>
+                    </div>
+
+                    <div class="container">
+                        <div class="row justify-content-start">
+                            <strong> <label for="your_name">Τύπος φοίτησης : </label></strong>
+                        </div>
+                    </div>
+                    <div class="container">
+                        <div class="row justify-content-start">
+                            <label>{{ studies_type }} </label>
+                        </div>
+                    </div>
+                    <div class="container">
+                        <div class="row justify-content-start">
+                            <strong> <label for="your_name">Πρώτη Επιλογή : </label></strong>
+                        </div>
+                    </div>
+                    <div class="container">
+                        <div class="row justify-content-start">
+                            <label>{{ first_choice }} </label>
+                        </div>
+                    </div>
+                    <div class="container">
+                        <div class="row justify-content-start">
+                            <strong> <label for="your_name">Δεύτερη Επιλογή : </label></strong>
+                        </div>
+                    </div>
+                    <div class="container">
+                        <div class="row justify-content-start">
+                            <label>{{ second_choice }} </label>
+                        </div>
+                    </div>
+                    <div class="container">
+                        <div class="row justify-content-start">
+                            <strong> <label for="your_name">Τρίτη Επιλογή : </label></strong>
+                        </div>
+                    </div>
+                    <div class="container">
+                        <div class="row justify-content-start">
+                            <label>{{ third_choice }} </label>
+                        </div>
+                    </div>
+                   
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- preview Tab -->
+    <div class="tab-pane fade" id="preview" role="preview" aria-labelledby="preview-tab">
+        <div class="card card-body border border-2 cardWrap">
+            <div class="container-fluid">
+                <a class="btn btn-secondary" data-bs-toggle="collapse" href="#collapseFilter" role="button"
+                    aria-expanded="false" aria-controls="collapseFilter">
+                    <i class="bi bi-funnel"></i> Κριτήρια Αναζήτησης
+                </a>
+                <br>
+                <br>
+                <div class="card card-body border border-2">
+                    <div class="card-title">
+                        <h5> <i class="bi bi-award"></i>Προεπισκόπηση και Υποβολή</h5>
+                        <hr>
+                    </div>
+
+                    <!-- MultiStep Form -->
+                    <div class="container-fluid" id="grad1">
+                        <div class="row justify-content-center mt-0">
+                            <div class="col-11 col-sm-9 col-md-7 col-lg-6 text-center p-0 mt-3 mb-2">
+                                <div class="card px-0 pt-4 pb-0 mt-3 mb-3">
+                                    <h2><strong>Η Αίτηση σας</strong></h2>
+                                    <p>Σιγουρευτείτε οτι όλα τα στοιχεία σας είναι σωστά πριν την οριστικοποίηση της
+                                        αίτησης σας</p>
+                                    <div class="row">
+                                        <div class="col-md-12 mx-0">
+                                            <!-- {% csrf_token %}                                       -->
+                                            <form id="msform" method="post" action="{% url 'view_my_application' application_id %}"> {% csrf_token %}                       
+
+                                                <!-- progressbar -->
+                                                <ul id="progressbar">
+                                                    <li class="active" id="account"><strong>Βασικές Πληροφορίες</strong>
+                                                    </li>
+                                                    <li id="personal"><strong>Εκπαίδευση</strong></li>
+                                                    <li id="payment"><strong>Εμπειρία</strong></li>
+                                                    <li id="recommendation"><strong>Συστατικές Επιστολές</strong></li>
+                                                    <li id="languages"><strong>Ξένες Γλώσσες</strong></li>
+                                                    <li id="confirm"><strong>Επιπρόσθετες Πληροφορίες</strong></li>
+                                                </ul>
+                                                <!-- fieldsets -->
+                                                {% if not isSubmitted %}
+                                                <fieldset>
+                                                    <div class="form-card">
+                                                        <h2 class="fs-title">Βασικές Πληροφορίες</h2>
+                                                        <div class="container">
+                                                            <div class="row justify-content-start">
+                                                                <div class="col-3">
+                                                                    <strong> <label for="your_name">Όνομα:
+                                                                        </label></strong>
+                                                                </div>
+                                                                <div class="col-9">
+                                                                    <label>{{ name }} </label>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+
+                                                        <div class="container">
+                                                            <div class="row justify-content-start">
+                                                                <div class="col-3">
+                                                                    <strong> <label for="your_name">Επίθετο:
+                                                                        </label></strong>
+                                                                </div>
+                                                                <div class="col-9">
+                                                                    <label>{{ surname }} </label>
+                                                                </div>
+
+                                                            </div>
+                                                        </div>
+                                                        <div class="container">
+                                                            <div class="row justify-content-start">
+                                                                <div class="col-3">
+                                                                    <strong><label for="your_name">Όνομα Πατέρα:
+                                                                        </label></strong>
+                                                                </div>
+                                                                <div class="col-9">
+                                                                    <label>{{ fatherName }} </label>
+                                                                </div>
+
+                                                            </div>
+                                                        </div>
+                                                        <div class="container">
+                                                            <div class="row justify-content-start">
+                                                                <div class="col-3">
+                                                                    <strong> <label for="your_name">Όνομα Μητέρας:
+                                                                        </label></strong>
+                                                                </div>
+                                                                <div class="col-9">
+                                                                    <label>{{ motherName }} </label>
+                                                                </div>
+
+                                                            </div>
+                                                        </div>
+                                                        <div class="container">
+                                                            <div class="row justify-content-start">
+                                                                <div class="col-3">
+                                                                    <strong> <label for="your_name">Αριθμός Φορολογικού
+                                                                            Μητρώου(ΑΦΜ): </label>
+                                                                    </strong>
+                                                                </div>
+                                                                <div class="col-9">
+                                                                    <label>{{ afm }} </label>
+                                                                </div>
+
+                                                            </div>
+                                                        </div>
+                                                        <div class="container">
+                                                            <div class="row justify-content-start">
+                                                                <div class="col-3">
+                                                                    <strong> <label for="your_name">Ημερομηνία Γέννησης:
+                                                                        </label> </strong>
+                                                                </div>
+                                                                <div class="col-9">
+                                                                    <label>{{ birth_date }} </label>
+                                                                </div>
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <input type="button" name="next" class="next action-button"
+                                                        value="Next Step" />
+                                                </fieldset>
+                                                <fieldset>
+                                                    <div class="form-card">
+                                                        <h2 class="fs-title">Εκπαίδευση</h2>
+                                                        <div class="table-responsive">
+                                                            <table class="table table-striped table-bordered"
+                                                                style="width:100%">
+                                                                <thead>
+                                                                    <tr>
+                                                                        <th>Τύπος Πτυχίου</th>
+                                                                        <th>Όνομα Τμήματος</th>
+                                                                        <th>Σχολή</th>
+                                                                        <th>Μέσος Όρος</th>
+                                                                        <th>Έτος/Αναμενόμενο έτος Αποφοίτησης</th>
+                                                                        <th>Τίτλος Πτυχιακής</th>
+
+
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    {% for education in student_educations%}
+                                                                    <tr>
+                                                                        <td>{{education.degree_type}}</td>
+                                                                        <td>{{education.title}}</td>
+                                                                        <td>{{education.university}}</td>
+                                                                        <td>{{education.average}}</td>
+                                                                        <td>{{education.graduation_year}}</td>
+                                                                        <td>{{education.thesis_title}}</td>
+                                                                    </tr>
+                                                                    {% empty %}
+                                                                    <tr>
+                                                                        <td></td>
+                                                                        <td></td>
+                                                                        <td></td>
+                                                                        <td></td>
+                                                                        <td>Δεν έχουν προστεθεί πτυχία</td>
+                                                                        <td></td>
+                                                                    </tr>
+                                                                    {% endfor %}
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                    <input type="button" name="previous"
+                                                        class="previous action-button-previous" value="Previous" />
+                                                    <input type="button" name="next" class="next action-button"
+                                                        value="Next Step" />
+                                                </fieldset>
+                                                <fieldset>
+                                                    <div class="form-card">
+                                                        <h2 class="fs-title">Εμπειρία</h2>
+                                                        <div class="table-responsive">
+                                                            <table class="table table-striped table-bordered"
+                                                                style="width:100%">
+                                                                <thead>
+                                                                    <tr>
+                                                                        <th>Τίτλος Εργασίας</th>
+                                                                        <th>Εργοδότης</th>
+                                                                        <th>Ημερομηνία Έναρξης</th>
+                                                                        <th>Ημερομηνία Λήξης</th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    {% for experience in work_experience%}
+                                                                    <tr>
+                                                                        <td>{{experience.job_title}}</td>
+                                                                        <td>{{experience.employer}}</td>
+                                                                        <td>{{experience.start_date}}</td>
+                                                                        <td>{{experience.end_date}}</td>
+
+
+                                                                    </tr>
+                                                                    {% empty %}
+                                                                    <tr>
+                                                                        <td>Δεν βρέθηκαν Πληροφορίες</td>
+                                                                        <td></td>
+                                                                        <td></td>
+                                                                        <td></td>
+
+                                                                    </tr>
+                                                                    {% endfor %}
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+
+                                                    </div>
+                                                    <input type="button" name="previous"
+                                                        class="previous action-button-previous" value="Previous" />
+                                                    <input type="button" name="make_payment" class="next action-button"
+                                                        value="Next Step" />
+                                                </fieldset>
+                                                <fieldset>
+                                                    <div class="form-card">
+                                                        <h2 class="fs-title">Συστατικές Επιστολές</h2>
+                                                        <div class="table-responsive">
+                                                            <table class="table table-striped table-bordered"
+                                                                style="width:100%">
+                                                                <thead>
+                                                                    <tr>
+                                                                        <th>Όνομα</th>
+                                                                        <th>Επίθετο</th>
+                                                                        <th>E-mail</th>
+                                                                        <th>Οργανισμός</th>
+                                                                        <th>Θέση</th>
+
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    {% for recommendation in recommendations%}
+                                                                    <tr>
+                                                                        <td>{{recommendation.recom_name}}</td>
+                                                                        <td>{{recommendation.recom_surname}}</td>
+                                                                        <td>{{recommendation.recom_email}}</td>
+                                                                        <td>{{recommendation.recom_organism}}</td>
+                                                                        <td>{{recommendation.recom_position}}</td>
+                                                                        <!-- <a href="#" target="_blank"><button><i
+                                                                            class="bi bi-eye"></i></button></a> -->
+                                                                    
+                                                                    </tr>
+                                                                    {% empty %}
+                                                                    <tr>
+                                                                        <td>Δεν βρέθηκαν Πληροφορίες</td>
+                                                                        <td></td>
+                                                                        <td></td>
+                                                                        <td></td>
+
+                                                                    </tr>
+                                                                    {% endfor %}
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                    <input type="button" name="previous"
+                                                        class="previous action-button-previous" value="Previous" />
+                                                    <input type="button" name="next" class="next action-button"
+                                                        value="Next Step" />
+                                                </fieldset>
+                                                <fieldset>
+                                                    <div class="form-card">
+                                                        <h2 class="fs-title">Ξένες Γλώσσες</h2>
+                                                        <div class="table-responsive">
+                                                            <table class="table table-striped table-bordered"
+                                                                style="width:100%">
+                                                                <thead>
+                                                                    <tr>
+                                                                        <th>Γλώσσα</th>
+                                                                        <th>Επίπεδο</th>
+                                                                        <th>Όνομα Πτυχίου</th>
+                                                                        <th>Ημερομηνία Απόκτησης</th>
+                                                                        <th>Βαθμός</th>
+
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    {% for language in languages%}
+                                                                    <tr>
+                                                                        <td>{{language.name}}</td>
+                                                                        <td>{{language.level}}</td>
+                                                                        <td>{{language.degree_name}}</td>
+                                                                        <td>{{language.date_of_acquisition}}</td>
+                                                                        <td>{{language.score}}</td>
+
+                                                                    </tr>
+                                                                    {% empty %}
+                                                                    <tr>
+                                                                        <td>Δεν βρέθηκαν Πληροφορίες</td>
+                                                                        <td></td>
+                                                                        <td></td>
+                                                                        <td></td>
+
+                                                                    </tr>
+                                                                    {% endfor %}
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                    <input type="button" name="previous"
+                                                        class="previous action-button-previous" value="Previous" />
+                                                    <input type="button" name="next" class="next action-button"
+                                                        value="Next Step" />
+                                                </fieldset>
+                                                <fieldset>
+                                                    <div class="form-card">
+                                                        <h2 class="fs-title">Επιπρόσθετες Πληροφορίες</h2>
+                                                        <div class="container">
+                                                            <div class="row justify-content-start">
+                                    
+                                                                <strong> <label for="Question1">Γιατί επιλέξατε να κάνετε αίτηση σε αυτό το μεταπτυχιακο;
+                                                                    </label></strong>
+                                    
+                                                            </div>
+                                                        </div>
+                                    
+                                                        <div class="container">
+                                                            <div class="row justify-content-start">
+                                    
+                                                                <label>{{ reason_of_selection }} </label>
+                                                            </div>
+                                                        </div>
+                                    
+                                                        <div class="container">
+                                                            <div class="row justify-content-start">
+                                                                <strong> <label for="your_name">Έχετε κάνει αίτηση σε κάποιο άλλο μεταπτυχιακό και αν ναι σε
+                                                                        ποιό; </label></strong>
+                                                            </div>
+                                                        </div>
+                                                        <div class="container">
+                                                            <div class="row justify-content-start">
+                                                                <label>{{ other_applications }} </label>
+                                                            </div>
+                                                        </div>
+                                    
+                                                        <div class="container">
+                                                            <div class="row justify-content-start">
+                                                                <strong> <label for="your_name">Τύπος φοίτησης : </label></strong>
+                                                            </div>
+                                                        </div>
+                                                        <div class="container">
+                                                            <div class="row justify-content-start">
+                                                                <label>{{ studies_type }} </label>
+                                                            </div>
+                                                        </div>
+                                                        <div class="container">
+                                                            <div class="row justify-content-start">
+                                                                <strong> <label for="your_name">Πρώτη Επιλογή : </label></strong>
+                                                            </div>
+                                                        </div>
+                                                        <div class="container">
+                                                            <div class="row justify-content-start">
+                                                                <label>{{ first_choice }} </label>
+                                                            </div>
+                                                        </div>
+                                                        <div class="container">
+                                                            <div class="row justify-content-start">
+                                                                <strong> <label for="your_name">Δεύτερη Επιλογή : </label></strong>
+                                                            </div>
+                                                        </div>
+                                                        <div class="container">
+                                                            <div class="row justify-content-start">
+                                                                <label>{{ second_choice }} </label>
+                                                            </div>
+                                                        </div>
+                                                        <div class="container">
+                                                            <div class="row justify-content-start">
+                                                                <strong> <label for="your_name">Τρίτη Επιλογή : </label></strong>
+                                                            </div>
+                                                        </div>
+                                                        <div class="container">
+                                                            <div class="row justify-content-start">
+                                                                <label>{{ third_choice }} </label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <input type="button" name="previous"
+                                                        class="previous action-button-previous" value="Previous" />
+                                                    <input type="submit" name="next" class="next action-button"
+                                                        value="Υποβολή" />
+                                                </fieldset>
+                                                {% endif %}
+                                                <!-- {% if isSubmitted %}
+                                                <fieldset>
+                                                    <div class="form-card">
+                                                        <h2 class="fs-title text-center">Η αίτηση σας υποβλήθηκε με
+                                                            επιτυχία !</h2>
+                                                        <br><br>
+                                                        <div class="row justify-content-center">
+                                                            <div class="col-3">
+                                                                <img src="{% static 'images/success.png'%}"
+                                                                    class="fit-image">
+                                                            </div>
+                                                        </div>
+                                                        <br><br>
+                                                        <div class="row justify-content-center">
+                                                            <div class="col-7 text-center">
+                                                                <h5>Ευχαριστούμε</h5>
+                                                                <a class="nav-link"
+                                                                    href="{% url 'create_application_pdf' application_id %}">PDF</a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </fieldset>
+                                                {% endif %} -->
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {% if isSubmitted %}
+<!-- last Tab -->
+    <div class="tab-pane fade" id="last" role="tabpanel" aria-labelledby="last-tab">
+        <div class="form-card">
+            <h2 class="fs-title text-center">Η αίτηση σας υποβλήθηκε με
+                επιτυχία !</h2>
+            <br><br>
+            <div class="row justify-content-center">
+                <div class="col-3">
+                    <img src="{% static 'images/success.png'%}"
+                        class="fit-image">
+                </div>
+            </div>
+            <br><br>
+            <div class="row justify-content-center">
+                <div class="col-7 text-center">
+                    <h5>Ευχαριστούμε</h5>
+                    <a class="nav-link"
+                        href="{% url 'create_application_pdf' application_id %}">PDF</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+
+</div>
+
+<script>
+
+    $(document).ready(function () {
+
+        var current_fs, next_fs, previous_fs; //fieldsets
+        var opacity;
+
+        $(".next").click(function () {
+
+            current_fs = $(this).parent();
+            next_fs = $(this).parent().next();
+
+            //Add Class Active
+            $("#progressbar li").eq($("fieldset").index(next_fs)).addClass("active");
+
+            //show the next fieldset
+            next_fs.show();
+            current_fs.hide()
+            //hide the current fieldset with style
+            current_fs.animate({ opacity: 0 }, {
+                step: function (now) {
+                    // for making fielset appear animation
+                    opacity = 1 - now;
+
+                    current_fs.css({
+                        'display': 'none',
+                        'position': 'relative'
+                    });
+                    next_fs.css({ 'opacity': opacity });
+                },
+                duration: 600
+            });
+        });
+
+        $(".previous").click(function () {
+
+            current_fs = $(this).parent();
+            previous_fs = $(this).parent().prev();
+
+            //Remove class active
+            $("#progressbar li").eq($("fieldset").index(current_fs)).removeClass("active");
+
+            //show the previous fieldset
+            previous_fs.show();
+            current_fs.hide()
+
+            //hide the current fieldset with style
+            current_fs.animate({ opacity: 0 }, {
+                step: function (now) {
+                    // for making fielset appear animation
+                    opacity = 1 - now;
+
+                    current_fs.css({
+                        'display': 'none',
+                        'position': 'relative'
+                    });
+                    previous_fs.css({ 'opacity': opacity });
+                },
+                duration: 600
+            });
+        });
+
+        $('.radio-group .radio').click(function () {
+            $(this).parent().find('.radio').removeClass('selected');
+            $(this).addClass('selected');
+        });
+
+        $(".submit").click(function () {
+            return false;
+        })
+
+    });
+
+
+
+
+
+    //  start of dragable table
+    // $(function () {
+    //     $('#tableD').bootstrapTable()
+
+    //     $('#button').click(function () {
+    //         alert(JSON.stringify($('#table').bootstrapTable('getData').map(function (row) {
+    //             return row.id
+    //         })))
+    //     })
+    // })
+
+    // var fixHelperModified = function (e, tr) {
+    //     var $originals = tr.children();
+    //     var $helper = tr.clone();
+    //     $helper.children().each(function (index) {
+    //         $(this).width($originals.eq(index).width())
+    //     });
+    //     return $helper;
+    // },
+    //     updateIndex = function (e, ui) {
+    //         $('td.index', ui.item.parent()).each(function (i) {
+    //             $(this).html(i + 1);
+    //         });
+    //         $('input[type=text]', ui.item.parent()).each(function (i) {
+    //             $(this).val(i + 1);
+    //         });
+    //     };
+
+    // $("#myTable tbody").sortable({
+    //     helper: fixHelperModified,
+    //     stop: updateIndex
+    // }).disableSelection();
+
+    // $("#myTable tbody").sortable({
+    //     distance: 5,
+    //     delay: 100,
+    //     opacity: 0.6,
+    //     cursor: 'move',
+    //     update: function () { }
+    // });
+
+
+
+</script>
+
+
+
+</script>
+
+{% endblock %}

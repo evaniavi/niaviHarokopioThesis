@@ -1,0 +1,176 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block content %}
+
+<style>
+    /* custom inclusion of right, left and below tabs */
+
+    #myTabNavItem {
+        float: left;
+        width: 100%;
+        border-color: rgb(141, 139, 139) #ddd #ddd #ddd;
+    }
+
+
+
+
+    .nav-tabs>li>button {
+        margin-right: -1px;
+        -webkit-border-radius: 4px 0 0 4px;
+        -moz-border-radius: 4px 0 0 4px;
+        border-radius: 4px 0 0 4px;
+    }
+
+    .nav-tabs>li>button:hover,
+    .nav-tabs>li>button:focus {
+        border-color: #eeeeee #dddddd #eeeeee #eeeeee;
+    }
+
+
+    .nav-tabs .nav-link.active {
+        border-color: #ddd transparent #ddd #ddd;
+        *border-right-color: #ffffff;
+    }
+
+    .nav-tabs>.nav-link {
+        border-color: #ddd #ddd #ddd #ddd;
+    }
+
+
+    /* .nav-tabs {
+  float: left;
+  margin-right: 19px;
+  border-right: 1px solid #ddd;
+} */
+
+    /* .nav-link {
+  margin-right: -1px;
+  -webkit-border-radius: 4px 0 0 4px;
+     -moz-border-radius: 4px 0 0 4px;
+          border-radius: 4px 0 0 4px;
+
+}
+
+.nav-tabs .nav-link.active {
+  border-color: #dddddd #dddddd #dddddd #dddddd;
+  border-bottom:  solid #dddddd;
+  border-right: transparent;
+}
+
+
+.nav-tabs > li > button:hover,
+.nav-tabs > li > button:focus {
+  border-color: #dddddd #dddddd #dddddd #dddddd;
+}
+
+.nav-tabs .active > button,
+.nav-tabs .active > button:hover,
+.nav-tabs .active > button:focus {
+  border-color: #ddd  #ddd #ddd #ddd;
+  *border-right-color: #ffffff;
+}  */
+
+
+
+    .bs-edit {
+        margin: 20px;
+    }
+</style>
+
+<div class="row">
+    <div class="card card-body border border-2 cardWrap">
+        <div class="container-fluid">
+            <br>
+
+            <div class="card card-body border border-2">
+                <div class="card-title">
+                    <div class="d-flex flex-row-reverse">
+                    </div>
+                    <h5> <i class="bi bi-file-earmark-check"></i>Οι Αιτήσεις μου</h5>
+                    <hr>
+                </div>
+                <div class="table-responsive">
+                    <table class="table table-striped table-bordered" style="width:100%">
+                        <thead>
+                            <tr>
+                                <th>Τμήμα</th>
+                                <th>Έτος Αίτησης</th>
+                                <th>Κατάσταση</th>
+     
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for application in applications%}
+                            <tr>
+                                <td>{{application.program.name}}</td>
+                                <td>{{application.year}}</td>
+                                <td>{{application.status}}</td>
+                                <td> <a class="btn btn-secondary" href="{% url 'view_my_application' application.id %}"
+                                    style="background-color: #23384e;" >
+                                    <i class="bi bi-eye"></i>
+                                Eπιλογή </a></td>
+
+
+
+
+                            </tr>
+                            {% empty %}
+                            <tr>
+                                <td>Δεν βρέθηκαν Πληροφορίες</td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+<!-- <div class="tab-content" id="v-pills-tabContent"> -->
+
+
+
+<!-- </div> -->
+<script>
+    (function () {
+        'use strict';
+
+        var sideTabsPaneHeight = function () {
+            var navHeight = $('.nav-tabs.nav-tabs-left').outerHeight() || $('.nav-tabs.nav-tabs-right').outerHeight() || 0;
+
+            var paneHeight = 0;
+
+            $('.tab-content.side-tabs .tab-pane').each(function (idx) {
+                paneHeight = $(this).outerHeight() > paneHeight ? $(this).outerHeight() : paneHeight;
+            });
+
+            $('.tab-content.side-tabs .tab-pane').each(function (idx) {
+                $(this).css('min-height', navHeight + 'px');
+            });
+        };
+
+        $(function () {
+            sideTabsPaneHeight();
+
+            $(window).resize(function () {
+                sideTabsPaneHeight();
+            });
+
+            $('.nav-tabs.nav-tabs-left').resize(function () {
+                sideTabsPaneHeight();
+            });
+        });
+    }());
+
+</script>
+
+{% endblock %}

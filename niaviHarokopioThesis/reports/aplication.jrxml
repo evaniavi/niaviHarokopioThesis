@@ -1,0 +1,795 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="aplication" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="f5477afa-d217-489a-aa04-7e8044c5d844">
+	<property name="ireport.zoom" value="1.3310000000000004"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="240"/>
+	<style name="table">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TH" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_CH" mode="Opaque" backcolor="#FFBFBF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<subDataset name="education" uuid="e8aa9ac3-7ea5-41b6-8fa7-49e8ec1261a7">
+		<parameter name="APPLICATION_ID" class="java.lang.Double">
+			<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+		</parameter>
+		<queryString>
+			<![CDATA[SELECT id,title,university,average,graduation_year,degree_type,thesis_title from personal_educationinfo where application_id =$P{APPLICATION_ID}]]>
+		</queryString>
+		<field name="id" class="java.lang.Integer"/>
+		<field name="title" class="java.lang.String"/>
+		<field name="university" class="java.lang.String"/>
+		<field name="average" class="java.lang.String"/>
+		<field name="graduation_year" class="java.lang.String"/>
+		<field name="degree_type" class="java.lang.String"/>
+		<field name="thesis_title" class="java.lang.String"/>
+	</subDataset>
+	<subDataset name="job" uuid="9e04c8c9-3efa-4f69-99e9-0cbb0f90fcc3">
+		<parameter name="APPLICATION_ID" class="java.lang.Double">
+			<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+		</parameter>
+		<queryString>
+			<![CDATA[SELECT job_title,employer,duties_description,to_char(start_date,'dd/MM/yyyy') as start_date,to_char(end_date,'dd/MM/yyyy') as end_date from personal_jobinfo where application_id =$P{APPLICATION_ID}]]>
+		</queryString>
+		<field name="job_title" class="java.lang.String"/>
+		<field name="employer" class="java.lang.String"/>
+		<field name="duties_description" class="java.lang.String"/>
+		<field name="start_date" class="java.lang.String"/>
+		<field name="end_date" class="java.lang.String"/>
+	</subDataset>
+	<subDataset name="recommendation" uuid="322eb6b9-5c37-463f-b25e-02a1940c6d2e">
+		<parameter name="APPLICATION_ID" class="java.lang.Double">
+			<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+		</parameter>
+		<queryString>
+			<![CDATA[SELECT recom_name,recom_surname,recom_email,recom_phone,recom_position,recom_organism
+from personal_recommendation where application_id =$P{APPLICATION_ID}]]>
+		</queryString>
+		<field name="recom_name" class="java.lang.String"/>
+		<field name="recom_surname" class="java.lang.String"/>
+		<field name="recom_email" class="java.lang.String"/>
+		<field name="recom_phone" class="java.lang.String"/>
+		<field name="recom_position" class="java.lang.String"/>
+		<field name="recom_organism" class="java.lang.String"/>
+	</subDataset>
+	<subDataset name="languages" uuid="73f5662c-4b70-40dd-8f13-ca380e44606a">
+		<parameter name="APPLICATION_ID" class="java.lang.Double">
+			<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+		</parameter>
+		<queryString>
+			<![CDATA[SELECT name,degree_name,level,score,to_char(date_of_acquisition,'dd/MM/yyyy') as date_of_acquisition from personal_foreignlanguages where application_id =$P{APPLICATION_ID}]]>
+		</queryString>
+		<field name="name" class="java.lang.String"/>
+		<field name="degree_name" class="java.lang.String"/>
+		<field name="level" class="java.lang.String"/>
+		<field name="score" class="java.lang.String"/>
+		<field name="date_of_acquisition" class="java.lang.String"/>
+	</subDataset>
+	<parameter name="IMAGE_DIR" class="java.lang.String"/>
+	<parameter name="APPLICATION_ID" class="java.lang.Double"/>
+	<parameter name="USER_ID" class="java.lang.Long"/>
+	<queryString>
+		<![CDATA[SELECT a.id,
+     to_char(birth_date,'dd/MM/yyyy') AS birth_date,
+     name,
+     surname,
+     afm,
+     b."motherName" AS b_motherName,
+     b."fatherName" AS b_fatherName,
+     c.first_choice,
+     c.second_choice,
+     c.third_choice,
+     c.studies_type,
+     c.other_applications,
+     c.reason_of_selection
+FROM
+ "personal_basicuserinfo" b
+left outer join personal_application a on b.application_id =a.id
+left outer join personal_additionalinfo c on c.application_id =a.id
+WHERE
+a.id = $P{APPLICATION_ID}
+ and   b.user_id = $P{USER_ID}]]>
+	</queryString>
+	<field name="id" class="java.lang.Integer"/>
+	<field name="birth_date" class="java.lang.String"/>
+	<field name="name" class="java.lang.String"/>
+	<field name="surname" class="java.lang.String"/>
+	<field name="afm" class="java.lang.String"/>
+	<field name="b_mothername" class="java.lang.String"/>
+	<field name="b_fathername" class="java.lang.String"/>
+	<field name="first_choice" class="java.lang.String"/>
+	<field name="second_choice" class="java.lang.String"/>
+	<field name="third_choice" class="java.lang.String"/>
+	<field name="studies_type" class="java.lang.String"/>
+	<field name="other_applications" class="java.lang.String"/>
+	<field name="reason_of_selection" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<pageHeader>
+		<band height="50" splitType="Stretch">
+			<image hAlign="Center">
+				<reportElement x="120" y="0" width="314" height="50" uuid="a463c6c5-d3a2-4263-a216-6cdf7a2f1bb0"/>
+				<imageExpression><![CDATA[$P{IMAGE_DIR} + "logo.png"]]></imageExpression>
+			</image>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="23" splitType="Stretch">
+			<staticText>
+				<reportElement x="22" y="0" width="131" height="23" uuid="e5813c66-9e5e-4db4-aba4-12ffeb423272"/>
+				<textElement>
+					<font isBold="true" isUnderline="true" pdfFontName="DejaVuSans-Bold.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[Αριθμός Αίτησης :]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="153" y="3" width="127" height="20" uuid="d0daa46a-7c3c-44f0-830f-942e040e10e2"/>
+				<textFieldExpression><![CDATA[$F{id}]]></textFieldExpression>
+			</textField>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="100" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="169" height="20" uuid="6f283064-c1c5-45c2-b0bc-8fb4e3f2233a"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true" isUnderline="true" pdfFontName="DejaVuSans-Bold.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[Βασικές Πληροφορίες:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="20" width="120" height="20" uuid="73d849ec-caa0-48a4-9024-32983a89e7d7"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true" isUnderline="false" pdfFontName="DejaVuSans-Bold.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[Όνομα:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="40" width="120" height="20" uuid="24694104-2cb2-4f7a-bbb4-0151f1014026"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true" isUnderline="false" pdfFontName="DejaVuSans-Bold.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[Επώνυμο:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="80" width="120" height="20" uuid="1a3cde25-595b-48fe-ba4e-b6b087cc0305"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true" isUnderline="false" pdfFontName="DejaVuSans-Bold.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[ΑΦΜ:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="120" y="20" width="144" height="20" uuid="040ca787-0daa-4e00-816a-1cf37f31cfd7"/>
+				<textElement verticalAlignment="Middle">
+					<font pdfFontName="DejaVuSans.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{name}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="120" y="40" width="144" height="20" uuid="8edad57a-f98e-4c2e-9e63-c270186c393f"/>
+				<textElement verticalAlignment="Middle">
+					<font pdfFontName="DejaVuSans.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{surname}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="120" y="60" width="133" height="20" uuid="998fcef6-3aef-4aba-bb36-6fa4728e56f2"/>
+				<textElement verticalAlignment="Middle">
+					<font pdfFontName="DejaVuSans.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{birth_date}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="60" width="120" height="20" uuid="89098d50-5049-4c2f-b164-aff1b58b1362"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true" isUnderline="false" pdfFontName="DejaVuSans-Bold.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[Ημ/νία Γέννησης:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="120" y="80" width="133" height="20" uuid="624ee93a-00c6-498a-a65e-ce5e3a3e2c91"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{afm}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="280" y="20" width="120" height="20" uuid="51d4f225-ee9d-4531-97af-f40a2918fa40"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true" isUnderline="false" pdfFontName="DejaVuSans-Bold.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[Όνομα Πατέρα:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="280" y="40" width="120" height="20" uuid="76821b01-b0a0-4d63-9ecf-4f81cf00fb86"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true" isUnderline="false" pdfFontName="DejaVuSans-Bold.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[Όνομα Μητέρας:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="400" y="40" width="133" height="20" uuid="a429db5b-3b3a-417b-bd21-017d8164f7b8"/>
+				<textElement verticalAlignment="Middle">
+					<font pdfFontName="DejaVuSans.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{b_fathername}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="400" y="20" width="133" height="20" uuid="fd3b261a-e171-4cf6-b5f1-6f0717f6edf7"/>
+				<textElement verticalAlignment="Middle">
+					<font pdfFontName="DejaVuSans.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{b_mothername}]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="80" splitType="Stretch">
+			<componentElement>
+				<reportElement key="table" style="table" stretchType="RelativeToBandHeight" x="0" y="28" width="555" height="52" isPrintWhenDetailOverflows="true" uuid="2dbf2699-c3d1-467f-b571-dad76218f9c6"/>
+				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
+					<datasetRun subDataset="education" uuid="5e3ea413-8380-4f00-ab34-96bba63251dc">
+						<datasetParameter name="APPLICATION_ID">
+							<datasetParameterExpression><![CDATA[$P{APPLICATION_ID}]]></datasetParameterExpression>
+						</datasetParameter>
+						<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+					</datasetRun>
+					<jr:column width="90" uuid="feef74f0-e756-44fd-a57a-bd6c5b9c610a">
+						<jr:columnHeader style="table_CH" height="30" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="90" height="30" uuid="7188e11b-1024-450a-9799-19b15c918212"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font pdfFontName="DejaVuSans.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+								</textElement>
+								<text><![CDATA[Τύπος Πτυχίου]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="table_TD" height="30" rowSpan="1">
+							<textField>
+								<reportElement x="0" y="0" width="90" height="30" uuid="72e2e798-6677-4389-886a-baa730b28242"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font pdfFontName="DejaVuSans.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{degree_type}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="90" uuid="3cd23e32-d9d6-4c31-af38-81b770bc5280">
+						<jr:columnHeader style="table_CH" height="30" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="90" height="30" uuid="021ad71f-99a9-4c46-ba9a-cef385934948"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font pdfFontName="DejaVuSans.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+								</textElement>
+								<text><![CDATA[Τίτλος]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="table_TD" height="30" rowSpan="1">
+							<textField>
+								<reportElement x="0" y="0" width="90" height="30" uuid="338f658d-0a93-42b2-82b8-469aa70d191f"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font pdfFontName="DejaVuSans.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{title}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="90" uuid="ad8b8645-408e-4487-bee9-8c41e60bbfbc">
+						<jr:columnHeader style="table_CH" height="30" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="90" height="30" uuid="e8859287-897a-4e79-8853-5173c3dc1ae2"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font pdfFontName="DejaVuSans.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+								</textElement>
+								<text><![CDATA[Πανεπιστήμιο]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="table_TD" height="30" rowSpan="1">
+							<textField>
+								<reportElement x="0" y="0" width="90" height="30" uuid="9751e0d0-0c1f-47e0-943a-ddf8614c2bc6"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font pdfFontName="DejaVuSans.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{university}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="90" uuid="99d773d4-1bab-4f85-ac05-ffbe770cd0f1">
+						<jr:columnHeader style="table_CH" height="30" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="90" height="30" uuid="037628e5-837c-4c4a-9b18-4614edd7b473"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font pdfFontName="DejaVuSans.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+								</textElement>
+								<text><![CDATA[Μ.Ο]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="table_TD" height="30" rowSpan="1">
+							<textField>
+								<reportElement x="0" y="0" width="90" height="30" uuid="d3008890-23af-45f1-a627-447d0a7e2d98"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle"/>
+								<textFieldExpression><![CDATA[$F{average}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="191" uuid="8049119d-60c3-4a0d-984f-1b4f8d370f79">
+						<jr:columnHeader style="table_CH" height="30" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="191" height="30" uuid="479ea7ef-a82a-4d38-bcec-4d6b566a9c63"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font pdfFontName="DejaVuSans.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+								</textElement>
+								<text><![CDATA[Τίτλος Εργασίας]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="table_TD" height="30" rowSpan="1">
+							<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+								<reportElement stretchType="RelativeToBandHeight" mode="Opaque" x="0" y="0" width="191" height="30" isPrintWhenDetailOverflows="true" uuid="1e95053b-03c1-4209-90ae-fd0601086751"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font pdfFontName="DejaVuSans.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{thesis_title}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+				</jr:table>
+			</componentElement>
+			<staticText>
+				<reportElement x="0" y="8" width="100" height="20" uuid="85ee8afb-fa61-47f8-901c-b7f7f7e64427"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true" isUnderline="true" pdfFontName="DejaVuSans-Bold.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[Εκπαίδευση:]]></text>
+			</staticText>
+		</band>
+		<band height="80" splitType="Stretch">
+			<componentElement>
+				<reportElement key="table" style="table" stretchType="RelativeToBandHeight" x="0" y="31" width="555" height="49" isPrintWhenDetailOverflows="true" uuid="4dcc7b1e-c8a5-43bf-8719-89b12f1b1880"/>
+				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
+					<datasetRun subDataset="job" uuid="d7ec1822-ddf7-4916-86b5-6f6de32bf40c">
+						<datasetParameter name="APPLICATION_ID">
+							<datasetParameterExpression><![CDATA[$P{APPLICATION_ID}]]></datasetParameterExpression>
+						</datasetParameter>
+						<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+					</datasetRun>
+					<jr:column width="90" uuid="650d968c-0a71-4251-8e9a-d65204b2bc2c">
+						<jr:columnHeader style="table_CH" height="30" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="90" height="30" uuid="0780a768-f41e-407d-8938-e82033d1c7ac"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font pdfFontName="DejaVuSans.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+								</textElement>
+								<text><![CDATA[Τίτλος]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="table_TD" height="30" rowSpan="1">
+							<textField isBlankWhenNull="true">
+								<reportElement x="0" y="0" width="90" height="30" uuid="a494af68-cdb8-4f0c-a591-1bdbb218e28b"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle"/>
+								<textFieldExpression><![CDATA[$F{job_title}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="105" uuid="718f3a69-b8ac-4e69-a800-6053bb82f544">
+						<jr:columnHeader style="table_CH" height="30" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="105" height="30" uuid="1c0614db-af7e-4c70-b6fd-b4ba24e101a3"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font pdfFontName="DejaVuSans.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+								</textElement>
+								<text><![CDATA[Εργοδότης]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="table_TD" height="30" rowSpan="1">
+							<textField isBlankWhenNull="true">
+								<reportElement x="0" y="0" width="105" height="30" uuid="134cd254-422a-4985-a86a-ad6d9beeda1f"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle"/>
+								<textFieldExpression><![CDATA[$F{employer}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="176" uuid="a8462bb2-adf9-4a78-8fe7-22950d11e7a4">
+						<jr:columnHeader style="table_CH" height="30" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="176" height="30" uuid="92b735f1-b181-47f5-8509-c037b092d89d"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font pdfFontName="DejaVuSans.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+								</textElement>
+								<text><![CDATA[Καθήκοντα]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="table_TD" height="30" rowSpan="1">
+							<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+								<reportElement stretchType="RelativeToTallestObject" mode="Opaque" x="0" y="0" width="176" height="30" isPrintWhenDetailOverflows="true" uuid="297ab2ed-d74d-45f1-b2a0-b5fc37376fe3"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font pdfFontName="DejaVuSans.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{duties_description}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="90" uuid="5c0d7801-eee9-4d19-81f5-5c4155a912d7">
+						<jr:columnHeader style="table_CH" height="30" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="90" height="30" uuid="9e3ba8fc-c85e-4433-972b-5a9abaf8b960"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font pdfFontName="DejaVuSans.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+								</textElement>
+								<text><![CDATA[Ημ/νία Έναρξης]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="table_TD" height="30" rowSpan="1">
+							<textField isBlankWhenNull="true">
+								<reportElement stretchType="RelativeToTallestObject" mode="Opaque" x="0" y="0" width="90" height="30" isPrintWhenDetailOverflows="true" uuid="99a079d9-5536-4f9c-adb6-0ce09915462c"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle"/>
+								<textFieldExpression><![CDATA[$F{start_date}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="90" uuid="dac2e653-2c73-4eb7-bf6b-e03578548870">
+						<jr:columnHeader style="table_CH" height="30" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="90" height="30" uuid="5a89170c-eb6f-4d14-bd49-55802c17cc39"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font pdfFontName="DejaVuSans.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+								</textElement>
+								<text><![CDATA[Ημ/νία Τέλους]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="table_TD" height="30" rowSpan="1">
+							<textField isBlankWhenNull="true">
+								<reportElement x="0" y="0" width="90" height="30" uuid="4b806c87-76f0-465c-9da0-047968f3614f"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle"/>
+								<textFieldExpression><![CDATA[$F{end_date}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+				</jr:table>
+			</componentElement>
+			<staticText>
+				<reportElement x="0" y="11" width="100" height="20" uuid="36037018-9967-486f-b57c-6123962ae8b2"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true" isUnderline="true" pdfFontName="DejaVuSans-Bold.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[Προϋπηρεσία:]]></text>
+			</staticText>
+		</band>
+		<band height="75" splitType="Stretch">
+			<componentElement>
+				<reportElement key="table" style="table" stretchType="RelativeToBandHeight" x="0" y="26" width="555" height="49" isPrintWhenDetailOverflows="true" uuid="e02880d0-fb44-44b1-87aa-c319112cbb68"/>
+				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
+					<datasetRun subDataset="recommendation" uuid="a6706329-7fa9-429e-a491-ee1d4ca5fbae">
+						<datasetParameter name="APPLICATION_ID">
+							<datasetParameterExpression><![CDATA[$P{APPLICATION_ID}]]></datasetParameterExpression>
+						</datasetParameter>
+						<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+					</datasetRun>
+					<jr:column width="140" uuid="4d5352ec-01db-4177-8834-1244e49ff0ab">
+						<jr:columnHeader style="table_CH" height="25" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="140" height="25" uuid="e3a97972-ba12-42db-8934-1b710c23d42b"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font pdfFontName="DejaVuSans.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+								</textElement>
+								<text><![CDATA[Όνομα]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="table_TD" height="36" rowSpan="1">
+							<textField isBlankWhenNull="true">
+								<reportElement x="0" y="0" width="140" height="36" uuid="7e061c0d-bc36-443a-816e-e73fe7298e8b"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font pdfFontName="DejaVuSans.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{recom_surname} + " " +$F{recom_name}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="105" uuid="c67be9a3-0d07-4648-a7a9-e0e7857b68ab">
+						<jr:columnHeader style="table_CH" height="25" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="105" height="25" uuid="663c5f6f-61db-4a68-a728-c3b535c6df36"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font pdfFontName="DejaVuSans.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+								</textElement>
+								<text><![CDATA[E-mail]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="table_TD" height="36" rowSpan="1">
+							<textField isBlankWhenNull="true">
+								<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="105" height="36" isPrintWhenDetailOverflows="true" uuid="d6807752-f91c-48b7-a6cb-106cdd623efb"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle"/>
+								<textFieldExpression><![CDATA[$F{recom_email}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="102" uuid="8d0d6c6c-2c2b-4469-a566-7a5a8eced4d1">
+						<jr:columnHeader style="table_CH" height="25" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="102" height="25" uuid="87ec6e57-05e5-4111-a135-3ac77c7dc589"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font pdfFontName="DejaVuSans.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+								</textElement>
+								<text><![CDATA[Τηλέφωνο]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="table_TD" height="36" rowSpan="1">
+							<textField>
+								<reportElement stretchType="RelativeToTallestObject" mode="Opaque" x="0" y="0" width="102" height="36" isPrintWhenDetailOverflows="true" uuid="e6c3c9e9-ae5b-451c-aa89-5f3ac117c1d4"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle"/>
+								<textFieldExpression><![CDATA[$F{recom_phone}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="99" uuid="e9e96412-5983-4bc3-b2de-e9d14575d199">
+						<jr:columnHeader style="table_CH" height="25" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="99" height="25" uuid="cdf586f8-9c3f-4091-958a-205f7ab42dcc"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font pdfFontName="DejaVuSans.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+								</textElement>
+								<text><![CDATA[Οργανισμός]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="table_TD" height="36" rowSpan="1">
+							<textField isBlankWhenNull="true">
+								<reportElement stretchType="RelativeToTallestObject" mode="Opaque" x="0" y="0" width="99" height="36" isPrintWhenDetailOverflows="true" uuid="cbb1a98f-74ad-4b17-9253-4b7b86923109"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font pdfFontName="DejaVuSans.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{recom_organism}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="107" uuid="16212e58-8eb4-4da2-b5a8-b77e70920d95">
+						<jr:columnHeader style="table_CH" height="25" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="107" height="25" uuid="3a35480a-8975-480c-bf3c-77aef64d9007"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font pdfFontName="DejaVuSans.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+								</textElement>
+								<text><![CDATA[Θέση]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="table_TD" height="36" rowSpan="1">
+							<textField isBlankWhenNull="true">
+								<reportElement x="0" y="0" width="107" height="36" uuid="001e4b30-6c2e-4b39-88ae-add233db4ed8"/>
+								<textElement verticalAlignment="Middle">
+									<font pdfFontName="DejaVuSans.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{recom_position}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+				</jr:table>
+			</componentElement>
+			<staticText>
+				<reportElement x="0" y="6" width="139" height="20" uuid="b5465d88-943a-4870-96b1-150b67b03356"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true" isUnderline="true" pdfFontName="DejaVuSans-Bold.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[Συστατικές Επιστολές:]]></text>
+			</staticText>
+		</band>
+		<band height="75" splitType="Stretch">
+			<componentElement>
+				<reportElement key="table" style="table" stretchType="RelativeToBandHeight" x="0" y="26" width="555" height="49" isPrintWhenDetailOverflows="true" uuid="262b5a16-f99d-4eb6-afc5-354cc894b2d9"/>
+				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
+					<datasetRun subDataset="languages" uuid="7a4ed6ce-2ccd-47af-8ab8-18201422a674">
+						<datasetParameter name="APPLICATION_ID">
+							<datasetParameterExpression><![CDATA[$P{APPLICATION_ID}]]></datasetParameterExpression>
+						</datasetParameter>
+						<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+					</datasetRun>
+					<jr:column width="140" uuid="c35364f4-3a73-4323-80e4-4c85683cde99">
+						<jr:columnHeader style="table_CH" height="25" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="140" height="25" uuid="672f00e6-d31b-4e36-b4ae-08ae12003feb"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font pdfFontName="DejaVuSans.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+								</textElement>
+								<text><![CDATA[Γλώσσα]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="table_TD" height="36" rowSpan="1">
+							<textField isBlankWhenNull="true">
+								<reportElement x="0" y="0" width="140" height="36" uuid="3655f02d-82e5-4392-9a2c-57b6796c706f"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font pdfFontName="DejaVuSans.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{name}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="105" uuid="5d039083-ca66-4e84-b846-44cb1feb1cdd">
+						<jr:columnHeader style="table_CH" height="25" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="105" height="25" uuid="30f605fc-b6c4-4037-81b4-553b232471f9"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font pdfFontName="DejaVuSans.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+								</textElement>
+								<text><![CDATA[Όνομα πτυχίου]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="table_TD" height="36" rowSpan="1">
+							<textField isBlankWhenNull="true">
+								<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="105" height="36" isPrintWhenDetailOverflows="true" uuid="6de971bf-1415-40e1-8deb-17794ed49b74"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle"/>
+								<textFieldExpression><![CDATA[$F{degree_name}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="102" uuid="8f20dcb7-25f4-422d-a16f-045c74564e1e">
+						<jr:columnHeader style="table_CH" height="25" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="102" height="25" uuid="f1cae5d3-b68e-4caf-bcb7-81a3640559ce"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font pdfFontName="DejaVuSans.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+								</textElement>
+								<text><![CDATA[Επίπεδο]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="table_TD" height="36" rowSpan="1">
+							<textField>
+								<reportElement stretchType="RelativeToTallestObject" mode="Opaque" x="0" y="0" width="102" height="36" isPrintWhenDetailOverflows="true" uuid="cd3d40b0-e396-4f7b-901e-973dc427e5ec"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle"/>
+								<textFieldExpression><![CDATA[$F{level}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="99" uuid="5eb9fb02-fe78-4179-afea-2b8fef5616d4">
+						<jr:columnHeader style="table_CH" height="25" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="99" height="25" uuid="304e7bd1-9f02-4569-bea2-a65a8e115910"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font pdfFontName="DejaVuSans.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+								</textElement>
+								<text><![CDATA[Βαθμός]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="table_TD" height="36" rowSpan="1">
+							<textField isBlankWhenNull="true">
+								<reportElement stretchType="RelativeToTallestObject" mode="Opaque" x="0" y="0" width="99" height="36" isPrintWhenDetailOverflows="true" uuid="9109169a-0254-45c7-bbc4-2cdb157f8018"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle"/>
+								<textFieldExpression><![CDATA[$F{score}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="107" uuid="7b0e0318-f138-4a3b-9da8-bb82d681b300">
+						<jr:columnHeader style="table_CH" height="25" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="107" height="25" uuid="df36b6a5-7cd8-459a-8c28-9200b5b453f1"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font pdfFontName="DejaVuSans.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+								</textElement>
+								<text><![CDATA[Ημ/νία Απόκτησης]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="table_TD" height="36" rowSpan="1">
+							<textField isBlankWhenNull="true">
+								<reportElement x="0" y="0" width="107" height="36" uuid="2d111764-8e85-4125-8ceb-25012dafc4dd"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font pdfFontName="DejaVuSans.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{date_of_acquisition}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+				</jr:table>
+			</componentElement>
+			<staticText>
+				<reportElement x="0" y="6" width="139" height="20" uuid="2fdd6319-1917-4b40-b3ec-d0dd0bf33ce3"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true" isUnderline="true" pdfFontName="DejaVuSans-Bold.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[Ξένες Γλώσσες:]]></text>
+			</staticText>
+		</band>
+		<band height="296" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="139" height="20" uuid="16dfb5ee-f500-40cb-a47f-ebd122f86568"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true" isUnderline="true" pdfFontName="DejaVuSans-Bold.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[Επιπρόσθετες Πληροφορίες:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="20" width="120" height="20" uuid="bb2454ac-8334-4c7e-92c6-2485022d26e6"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true" isUnderline="false" pdfFontName="DejaVuSans-Bold.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[Τύπος Φοίτησης:]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="120" y="20" width="144" height="20" uuid="f5803ed5-28ee-4945-8ffb-d8289481ef1d"/>
+				<textElement verticalAlignment="Middle">
+					<font pdfFontName="DejaVuSans.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{studies_type}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="40" width="120" height="20" uuid="e233b09a-7bab-402f-bff0-109c4692ea90"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true" isItalic="false" isUnderline="false" pdfFontName="DejaVuSans-Bold.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[1η Επιλογή:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="60" width="120" height="20" uuid="a7f8b9a2-ac22-4774-bcf0-c998089dcedd"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true" isItalic="false" isUnderline="false" pdfFontName="DejaVuSans-Bold.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[2η Επιλογή:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="80" width="120" height="20" uuid="e9ae61c5-9ce5-465f-96ae-c42f21ba0216"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true" isItalic="false" isUnderline="false" pdfFontName="DejaVuSans-Bold.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[3η Επιλογή:]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="120" y="40" width="144" height="20" uuid="8f5c45e8-75f8-4777-953a-a3277d3d6851"/>
+				<textElement verticalAlignment="Middle">
+					<font pdfFontName="DejaVuSans.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{first_choice}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="120" y="60" width="144" height="20" uuid="c12f454d-c678-4311-bc27-88d3c41469d9"/>
+				<textElement verticalAlignment="Middle">
+					<font pdfFontName="DejaVuSans.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{second_choice}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="120" y="80" width="144" height="20" uuid="39d7a7c8-9d71-460f-a404-cf95b70a424f"/>
+				<textElement verticalAlignment="Middle">
+					<font pdfFontName="DejaVuSans.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{third_choice}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="100" width="488" height="20" uuid="1e7c4f97-724f-492b-a3ed-e515a6664891"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true" isItalic="false" isUnderline="false" pdfFontName="DejaVuSans-Bold.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[Γιατί επιλέξατε να κάνετε αίτηση σε αυτό το μεταπτυχιακο;]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="0" y="120" width="488" height="77" uuid="59065375-6fe8-4261-bf50-e989e5ffe6e5"/>
+				<textElement verticalAlignment="Top">
+					<font pdfFontName="DejaVuSans.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{reason_of_selection}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="197" width="488" height="20" uuid="9a42993f-6d16-48db-a273-4d77d254eced"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true" isItalic="false" isUnderline="false" pdfFontName="DejaVuSans-Bold.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[Έχετε κάνει αίτηση σε κάποιο άλλο μεταπτυχιακό και αν ναι σε ποιό;]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="0" y="217" width="488" height="77" uuid="4b11eb76-ff2f-4e5d-89a3-1b6df855dbf4"/>
+				<textElement verticalAlignment="Top">
+					<font pdfFontName="DejaVuSans.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{other_applications}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="27" splitType="Stretch"/>
+	</pageFooter>
+</jasperReport>

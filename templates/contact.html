@@ -1,0 +1,70 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block content %}
+<style>
+div.card-body {
+    background-color: #37393D !important;
+    color: #ffffff !important;
+}
+
+</style>
+
+{% for message in messages %}
+
+  <div class="alert {{ message.tags }} m-2" role="alert" id="msg">
+    {{ message|safe  }}
+  </div>
+{% endfor %}
+
+<div class="container">
+    <div>
+        <h1 class="h1" align=center style="color: #37393D;">Φόρμα επικοινωνιας</h1>
+        <p></p>
+        <div class="row">
+            <div class="col">
+                <div class="card text-center mb-3">
+                    <div class="card-body" style="background-color: #37393D;">
+                        <h5 class="card-title">Χαροκόπειο Πανεπιστήμιο</h5>
+                        
+                    </div>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item"><i class="bi bi-map"></i> Θησέως 70, 176 76, Καλλιθέα
+                           
+                        </li>
+                        <li class="list-group-item" style="align-self: center;">
+                            <div class="mapouter">
+                            <div class="gmap_canvas">
+                                <iframe width="200" height="200" id="gmap_canvas" src="https://maps.google.com/maps?q=thiseos%2070,%20kallithea%20177%2078&t=&z=15&ie=UTF8&iwloc=&output=embed" frameborder="0" scrolling="no" marginheight="0" marginwidth="0"></iframe><br><style>.mapouter{position:relative;text-align:center;height:200px;width:200px;}</style><style>.gmap_canvas {overflow:hidden;background:none!important;text-align:center;}</style>
+                            </div>
+                        </div></li>
+                        <li class="list-group-item"><i class="bi bi-clock-history"></i> Δευτ - Παρ 9:00 - 21:00</li>
+                        <li class="list-group-item"><i class="bi bi-telephone"></i> Τηλ. +30 697 6946 010</li>
+                        <li class="list-group-item"><i class="bi bi-printer"></i>Fax +30 697 6946 010</li>
+                        <li class="list-group-item"><i class="bi bi-envelope"></i> e-mail: evangelia.niavi@gmail.com</li>
+                    </ul>
+                    <div class="card-body">
+       
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card-body text-center text-white">
+                    <h1>Επικοινωνήστε μαζί μας</h1>
+                    <form method="post">
+                    {% csrf_token %}
+                        {{form|crispy}}
+                        <br>
+                        <button class="btn btn-secondary" type="submit">Αποστολή</button>
+                    </form>
+                </div>
+            </div>
+            
+        </div>
+        
+    </div>
+</div>
+
+  
+
+{% endblock %}
