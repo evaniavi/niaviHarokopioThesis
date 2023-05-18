@@ -285,6 +285,20 @@
         <h5>Καλως Ήρθατε, <cite title="User Title">{{user.username}}</cite></h5>
     </figcaption>
 </figure>
+<form method="POST" action="" enctype="multipart/form-data">
+
+    <div class="d-flex flex-row-reverse">
+        <div class="col col-lg-2">
+            <a type="button" class="btn btn-secondary"href="{% url 'create_application_pdf' application_id %}"
+            style="background-color: #23384e;width: 100%; margin-top: 3%;" name="print"  >
+            <i class="bi bi-printer-fill"></i>
+            Εκττύπωση </a> 
+
+        </div>
+    
+    </div>
+</form>
+<br/>
 
 <!-- Tabs  -->
 <ul class="nav nav-tabs justify-content-center" id="nav-tab" role="tablist">
@@ -325,7 +339,7 @@
             Προεπισκόπηση και Υποβολή</button>
     </li>
     {% endif %}
-    {% if not edit %}
+    {% if not edit and user.groups.all.0.name == 'students' %}
     <li class="nav-item" role="presentation">
         <button class="nav-link" id="travel-tab" data-bs-toggle="tab" data-bs-target="#last" type="button" role="tab"
             aria-controls="last" aria-selected="last" href="#preview"><i class="bi bi-send-check-fill"></i>
@@ -917,10 +931,6 @@
     <div class="tab-pane fade" id="preview" role="preview" aria-labelledby="preview-tab">
         <div class="card card-body border border-2 cardWrap">
             <div class="container-fluid">
-                <a class="btn btn-secondary" data-bs-toggle="collapse" href="#collapseFilter" role="button"
-                    aria-expanded="false" aria-controls="collapseFilter">
-                    <i class="bi bi-funnel"></i> Κριτήρια Αναζήτησης
-                </a>
                 <br>
                 <br>
                 <div class="card card-body border border-2">
@@ -1330,7 +1340,7 @@
         </div>
     </div>
 
-    {% if isSubmitted %}
+    {% if isSubmitted and user.groups.all.0.name == 'students' %}
 <!-- last Tab -->
     <div class="tab-pane fade" id="last" role="tabpanel" aria-labelledby="last-tab">
         <div class="form-card">

@@ -138,7 +138,7 @@ def create_application_pdf(request,pk):
     configuration = Config()
     configuration.input = os.path.join(os.path.abspath(os.path.dirname(__file__)), 'reports', 'aplication.jrxml')
     configuration.output = os.path.join(os.path.abspath(os.path.dirname(__file__)), 'reports', 'compile_to_file')
-    configuration.params = {'IMAGE_DIR': os.path.join(os.path.abspath(os.getcwd()), 'static/images/'),'APPLICATION_ID' : Decimal(pk), 'USER_ID' :student}
+    configuration.params = {'IMAGE_DIR': os.path.join(os.path.abspath(os.getcwd()), 'static/images/'),'APPLICATION_ID' : Decimal(pk),'PROFILE_DIR': os.path.join(os.path.abspath(os.getcwd()), 'media/')}
     configuration.dbType = config('dbType')
     configuration.dbHost = config('dbHost')
     configuration.dbName = config('dbName')
@@ -573,49 +573,6 @@ def recommendation_details(request,pk):
 
     return render(request, "recommendation_details.html", context)
 
-# @login_required
-# def create_new_application(request):  # dont need anymore?
-#     update_basic_info = False
-#     student = request.user  
-#     try:
-#         basic_info = BasicUserInfo.objects.get(user_id=student)      
-#     except BasicUserInfo.DoesNotExist:
-#         basic_info = None
-#     basic_info_form = BasicInfo_form(instance=basic_info)
-#     if basic_info is not None :
-#         name_ = getattr(basic_info, 'name')
-#         surname_ = getattr(basic_info, 'surname')
-#         fatherName_ = getattr(basic_info, 'fatherName')
-#         motherName_ = getattr(basic_info, 'motherName')
-#         afm_ = getattr(basic_info, 'afm')
-#         birth_date_ = getattr(basic_info, 'birth_date')
-#     else:
-#         name_ = ""
-#         surname_ =""
-#         fatherName_ = ""
-#         motherName_ = ""
-#         afm_ = ""
-#         birth_date_ = ""
-
-#     basic_info = BasicUserInfo.objects.filter(user_id=student)
-#     student_educations = EducationInfo.objects.filter(user_id=student).order_by('-id')
-#     work_experience = JobInfo.objects.filter(user_id=student).order_by('-id')
-#     recommendations = Recommendation.objects.filter(user_id=student).order_by('-id')
-#     context = {
-#         'student_educations':student_educations,
-#         'user_basic_info':basic_info_form,
-#         'work_experience':work_experience,
-#         'recommendations' :recommendations,
-#         'name': name_ ,
-#         'surname':surname_ , 
-#         'fatherName':fatherName_ ,
-#         'motherName':motherName_ ,
-#         'afm':afm_ ,
-#         'birth_date':birth_date_    , 
-
-#     }
-
-#     return render(request, "application.html", context)
 
 @login_required
 def departments(request): 
@@ -645,9 +602,9 @@ def create_application_for_program(request,pk):
     isSubmitted = False
     edit = False
     student = request.user
-    programs = PostgraduatePrograms.objects.select_related('department')
+    # programs = PostgraduatePrograms.objects.select_related('department')
     progr = PostgraduatePrograms.objects.get(id=pk)
-    dep = Departments.objects.get(id=progr.department_id)
+    # dep = Departments.objects.get(id=progr.department_id)
     directions = ProgramDirections.objects.filter(program_id=progr.id).order_by('-id')
     order=1
     for dir in directions:
@@ -708,7 +665,6 @@ def create_application_for_program(request,pk):
         obj = Application.objects.get(id=application.id)
         obj.status = "Οριστικοποιημένη"
         obj.save()
-    # print('application id ---->',application.id)
     application = Application.objects.get(id=application.id)
     basic_info = BasicUserInfo.objects.filter(user_id=student)
     student_educations = EducationInfo.objects.filter(user_id=student,application_id=application).order_by('-id')
@@ -774,7 +730,7 @@ def create_new_language(request,pk):
 
 @login_required
 def language_details(request,pk):
-    student = request.user.id
+    # student = request.user.id
     lang_details = ForeignLanguages.objects.get(id=pk)
 
     form = ForeignLanguages_form(instance=lang_details)
@@ -817,17 +773,17 @@ def view_my_application(request,pk):
     isSubmitted = False
     edit = False
     student = request.user
-    application = Application.objects.get(id=pk,user=student.id)
+    if student.groups.filter(name__contains='students').exists():
+        application = Application.objects.get(id=pk,user=student.id)    
+    else:
+        application = Application.objects.get(id=pk)
     progr = PostgraduatePrograms.objects.get(id=application.program_id)
-    dep = Departments.objects.get(id=progr.department_id)
+    # dep = Departments.objects.get(id=progr.department_id)
     directions = ProgramDirections.objects.filter(program_id=progr.id).order_by('-id')
     order=1
     for dir in directions:
         setattr(dir, 'order', order)
         order += 1
-
-    print('program id ---->',progr.id)
-    print('department id ---->',dep.id)
     try:
         basic_info = BasicUserInfo.objects.get(application_id=application.id)      
     except BasicUserInfo.DoesNotExist:
@@ -852,7 +808,7 @@ def view_my_application(request,pk):
         add_info = AdditionalInfo.objects.get(application_id=application.id)      
     except AdditionalInfo.DoesNotExist:
         add_info = None
-    add_info_form = AdditionalInfo_form(instance=add_info)
+    # add_info_form = AdditionalInfo_form(instance=add_info)
     if add_info is not None :
         reason_of_selection_ = getattr(add_info, 'reason_of_selection')
         other_applications_ = getattr(add_info, 'other_applications')
@@ -871,7 +827,6 @@ def view_my_application(request,pk):
         obj = Application.objects.get(id=application.id)
         obj.status = "Οριστικοποιημένη"
         obj.save()
-    print('application id ---->',application.id)
     application = Application.objects.get(id=application.id)
     basic_info = BasicUserInfo.objects.filter(application_id=application)
     student_educations = EducationInfo.objects.filter(application_id=application).order_by('-id')
@@ -880,7 +835,6 @@ def view_my_application(request,pk):
     languages = ForeignLanguages.objects.filter(application_id=application).order_by('-id')
     add_info = AdditionalInfo.objects.filter(application_id=application.id)
     if progr.start_date <= date.today() <= progr.end_date and application.status == 'Υπό Επεξεργασία': # need to add the year for each application
-        print('applications are open with id ---->',application.id)
         edit = True
     if application.status != 'Υπό Επεξεργασία':
         isSubmitted = True
@@ -921,11 +875,7 @@ def applfinalization(request,pk):
 @login_required
 @professor_required
 def select_applications_for_program(request,pk):
-    # applications = Application.objects.get(program_id=pk)
-    
-    # applications = BasicUserInfo.objects.select_related('application').filter(application__program_id=pk).exclude(application__status="Υπό Επεξεργασία")
-    # does not work applications = Application.objects.prefetch_related('educationinfo_set', 'basicuserinfo_set').filter(Q(status="Υπό Επεξεργασία") & Q(program_id=pk))
-    applications = Application.objects.filter(program_id=pk).prefetch_related('basicuserinfo_set')
+    applications = Application.objects.filter(program_id=pk).exclude(status="Υπό Επεξεργασία").prefetch_related('basicuserinfo_set')
     applicationsFilter = ApplicationFilter(request.GET, queryset=applications)
     applications = applicationsFilter.qs
     context = {
