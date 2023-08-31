@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="aplication" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="f5477afa-d217-489a-aa04-7e8044c5d844">
 	<property name="ireport.zoom" value="1.3310000000000004"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="159"/>
+	<property name="ireport.y" value="0"/>
 	<style name="table">
 		<box>
 			<pen lineWidth="1.0" lineColor="#000000"/>
@@ -614,7 +614,9 @@ a.id = $P{APPLICATION_ID}
 						<jr:detailCell style="table_TD" height="36" rowSpan="1">
 							<textField isBlankWhenNull="true">
 								<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="105" height="36" isPrintWhenDetailOverflows="true" uuid="6de971bf-1415-40e1-8deb-17794ed49b74"/>
-								<textElement textAlignment="Center" verticalAlignment="Middle"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font pdfFontName="DejaVuSans.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+								</textElement>
 								<textFieldExpression><![CDATA[$F{degree_name}]]></textFieldExpression>
 							</textField>
 						</jr:detailCell>
@@ -632,7 +634,9 @@ a.id = $P{APPLICATION_ID}
 						<jr:detailCell style="table_TD" height="36" rowSpan="1">
 							<textField>
 								<reportElement stretchType="RelativeToTallestObject" mode="Opaque" x="0" y="0" width="102" height="36" isPrintWhenDetailOverflows="true" uuid="cd3d40b0-e396-4f7b-901e-973dc427e5ec"/>
-								<textElement textAlignment="Center" verticalAlignment="Middle"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font pdfFontName="DejaVuSans.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+								</textElement>
 								<textFieldExpression><![CDATA[$F{level}]]></textFieldExpression>
 							</textField>
 						</jr:detailCell>
@@ -650,7 +654,9 @@ a.id = $P{APPLICATION_ID}
 						<jr:detailCell style="table_TD" height="36" rowSpan="1">
 							<textField isBlankWhenNull="true">
 								<reportElement stretchType="RelativeToTallestObject" mode="Opaque" x="0" y="0" width="99" height="36" isPrintWhenDetailOverflows="true" uuid="9109169a-0254-45c7-bbc4-2cdb157f8018"/>
-								<textElement textAlignment="Center" verticalAlignment="Middle"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font pdfFontName="DejaVuSans.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+								</textElement>
 								<textFieldExpression><![CDATA[$F{score}]]></textFieldExpression>
 							</textField>
 						</jr:detailCell>

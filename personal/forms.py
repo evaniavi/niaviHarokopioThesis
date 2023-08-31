@@ -211,12 +211,12 @@ class EducationInfo_form(forms.ModelForm):
             'graduation_year' : forms.TextInput (attrs={'type': 'text',
                                            'class': 'form-control', 
                                            'required':'True',}) ,
-            # 'thesis_title' : forms.Textarea (attrs={'type': 'text',
-            #                                'class': 'form-control', 
-            #                                'required':'False',})  ,
-            #  'thesis_description' : forms.Textarea (attrs={'class': 'form-control', 
-            #                               'required':'False',  
-            #                                } )     ,
+            'thesis_title' : forms.Textarea (attrs={'type': 'text',
+                                            'class': 'form-control', 
+                                            'required':'False',})  ,
+            'thesis_description' : forms.Textarea (attrs={'class': 'form-control', 
+                                           'required':'False',  
+                                            } )     ,
 
               'degree_type': forms.Select(choices = DEGREE_TYPES,attrs={ 
                              'class': 'form-control', 
@@ -239,7 +239,7 @@ class EducationInfo_form(forms.ModelForm):
 class BasicInfo_form(forms.ModelForm):
     class Meta():
         model = BasicUserInfo
-        fields = ['name','surname','fatherName','motherName','afm','birth_date']
+        fields = ['name','surname','fatherName','motherName','afm','birth_date','national_id','address']
         name= forms.CharField(widget= forms.TextInput 
                            (attrs={ 
                              'class': 'form-control', 
@@ -287,7 +287,28 @@ class BasicInfo_form(forms.ModelForm):
                                
                                 'minlength': '3', 
 				        } ))
-
+        national_id= forms.CharField(widget= forms.TextInput 
+                           (attrs={ 
+                             'class': 'form-control', 
+                              'required':'True', 
+                               'name':'motherName', 
+                               'id':'motherName', 
+                               'type':'text', 
+                               'placeholder':'Αριθμός Ταυτότητας', 
+                               
+                                'minlength': '3', 
+				        } ))
+        address= forms.CharField(widget= forms.TextInput 
+                           (attrs={ 
+                             'class': 'form-control', 
+                              'required':'True', 
+                               'name':'motherName', 
+                               'id':'motherName', 
+                               'type':'text', 
+                               'placeholder':'Διεύθυνση Κατοικίας', 
+                               
+                                'minlength': '3', 
+				        } ))
         # birth_date= forms.DateField(widget= DateInput(attrs={ 
         #                      'class': 'form-control', 
         #                       'required':'True', 
@@ -304,7 +325,9 @@ class BasicInfo_form(forms.ModelForm):
         "fatherName": "Όνομα Πατρός",
         "motherName": "Όνομα Μητρός",
         'afm' : 'Αριθμός Φορολογικού Μητρώου',
-        'birth_date' : 'Ημερομηνία Γέννησης'
+        'birth_date' : 'Ημερομηνία Γέννησης',
+        'national_id' : 'Αριθμός Ταυτότητας',
+        'address' : 'Διεύθυνση Κατοικίας'
         }
         widgets = {
             # 'birth_date': DateInput(attrs={'type': 'date',
@@ -325,7 +348,13 @@ class BasicInfo_form(forms.ModelForm):
                                            'required':'True',}) ,
             'afm' : TextInput (attrs={'type': 'text',
                                            'class': 'form-control', 
-                                           'required':'True',})                                                                                                                     
+                                           'required':'True',}) ,
+            'national_id' : TextInput (attrs={'type': 'text',
+                                           'class': 'form-control', 
+                                           'required':'True',}) ,
+            'address' : TextInput (attrs={'type': 'text',
+                                           'class': 'form-control', 
+                                           'required':'True',})                                                                                                                   
         }
 
     def clean_date(self):
@@ -554,6 +583,12 @@ class AdditionalInfo_form(forms.ModelForm):
     class Meta():
         model = AdditionalInfo
         fields = ['reason_of_selection','other_applications','studies_type','first_choice','second_choice','third_choice']
+        labels = {
+        'first_choice': 'Πρώτη Επιλογή',
+        'second_choice': 'Δεύτερη Επιλογή',
+        'third_choice': 'Τρίτη Επιλογή',
+
+        }
 
         reason_of_selection= forms.CharField(widget= forms.TextInput 
                            (attrs={ 
@@ -578,7 +613,7 @@ class AdditionalInfo_form(forms.ModelForm):
                                 'minlength': '3', 
 				        } ))
 
-        degree_type= forms.ChoiceField(choices = STUDIES_TYPES)
+        # degree_type= forms.ChoiceField(choices = STUDIES_TYPES)
         first_choice=forms.ChoiceField(choices = STUDIES_TYPES)
         second_choice=forms.ChoiceField(choices = STUDIES_TYPES,required=False)
         third_choice=forms.ChoiceField(choices = STUDIES_TYPES,required=False)

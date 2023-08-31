@@ -240,7 +240,7 @@ def student_education_dashboard(request):
         'fatherName':fatherName_ ,
         'motherName':motherName_ ,
         'afm':afm_ ,
-        'birth_date':birth_date_     
+        'birth_date':birth_date_ ,    
     }
 
     return render(request, "education_dashboard.html", context)
@@ -266,6 +266,8 @@ def student_dashboard(request,pk):
         motherName_ = getattr(basic_info, 'motherName')
         afm_ = getattr(basic_info, 'afm')
         birth_date_ = getattr(basic_info, 'birth_date')
+        national_id_ = getattr(basic_info, 'national_id')
+        address_ = getattr(basic_info, 'address')
     else:
         name_ = ""
         surname_ =""
@@ -273,6 +275,8 @@ def student_dashboard(request,pk):
         motherName_ = ""
         afm_ = ""
         birth_date_ = ""
+        national_id_ = ""
+        address_ = ""
 
     try:
         add_info = AdditionalInfo.objects.get(application_id=pk)      
@@ -324,7 +328,9 @@ def student_dashboard(request,pk):
         'directions' : directions,
         'first_choice' : first_choice_,
         'second_choice' :second_choice_,
-        'third_choice':third_choice_
+        'third_choice':third_choice_,
+        'national_id':national_id_,
+        'address':address_
     }
 
     return render(request, "education_dashboard.html", context)
@@ -405,15 +411,15 @@ def edit_additional_info(request,pk):
         form.fields['second_choice'] = forms.ChoiceField(choices=choices,required=False,
                                      widget=forms.Select(attrs={'class': 'form-control', 
 
-                             'name':'first_choice', 
+                             'name':'second_choice', 
                              'label':'Δεύτερη Επιλογή',  
-                             'id':'first_choice', }))
+                             'id':'second_choice', }))
         form.fields['third_choice'] = forms.ChoiceField(choices=choices,required=False,
                                      widget=forms.Select(attrs={'class': 'form-control', 
    
-                             'name':'first_choice', 
+                             'name':'third_choice', 
                              'label':'Τρίτη Επιλογή',  
-                             'id':'first_choice', }))
+                             'id':'third_choice', }))
         form.initial['first_choice'] = choices[0]
         form.initial['second_choice'] = choices[0]
         form.initial['third_choice'] = choices[0]
@@ -633,6 +639,8 @@ def create_application_for_program(request,pk):
         motherName_ = getattr(basic_info, 'motherName')
         afm_ = getattr(basic_info, 'afm')
         birth_date_ = getattr(basic_info, 'birth_date')
+        national_id_ = getattr(basic_info, 'national_id')
+        address_ = getattr(basic_info, 'address')
     else:
         name_ = ""
         surname_ =""
@@ -640,6 +648,8 @@ def create_application_for_program(request,pk):
         motherName_ = ""
         afm_ = ""
         birth_date_ = ""
+        national_id_ = ""
+        address_ = ""
 
     try:
         add_info = AdditionalInfo.objects.get(application_id=application.id)      
@@ -698,7 +708,9 @@ def create_application_for_program(request,pk):
         'isSubmitted' : isSubmitted,
         'first_choice' : first_choice_,
         'second_choice' :second_choice_,
-        'third_choice':third_choice_
+        'third_choice':third_choice_,
+        'national_id':national_id_,
+        'address':address_
     }
 
 
@@ -796,6 +808,8 @@ def view_my_application(request,pk):
         motherName_ = getattr(basic_info, 'motherName')
         afm_ = getattr(basic_info, 'afm')
         birth_date_ = getattr(basic_info, 'birth_date')
+        national_id_ = getattr(basic_info, 'national_id')
+        address_ = getattr(basic_info, 'address')
     else:
         name_ = ""
         surname_ =""
@@ -803,6 +817,8 @@ def view_my_application(request,pk):
         motherName_ = ""
         afm_ = ""
         birth_date_ = ""
+        national_id_ = ""
+        address_ = ""
 
     try:
         add_info = AdditionalInfo.objects.get(application_id=application.id)      
@@ -859,7 +875,9 @@ def view_my_application(request,pk):
         'isSubmitted' : isSubmitted,
         'first_choice' : first_choice_,
         'second_choice' :second_choice_,
-        'third_choice':third_choice_
+        'third_choice':third_choice_,
+        'national_id':national_id_,
+        'address':address_
     }
 
 

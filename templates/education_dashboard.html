@@ -286,7 +286,7 @@
     </figcaption>
 </figure>
 <form method="POST" action="" enctype="multipart/form-data">
-
+    {% if user.groups.all.0.name == 'professors' %}
     <div class="d-flex flex-row-reverse">
         <div class="col col-lg-2">
             <a type="button" class="btn btn-secondary"href="{% url 'create_application_pdf' application_id %}"
@@ -297,6 +297,7 @@
         </div>
     
     </div>
+    {% endif %}
 </form>
 <br/>
 
@@ -458,7 +459,30 @@
 
                                 </div>
                             </div>
+                            <div class="container">
+                                <div class="row justify-content-start">
+                                    <div class="col-3">
+                                        <strong> <label for="your_name">Αριθμός Ταυτότητας: </label>
+                                        </strong>
+                                    </div>
+                                    <div class="col-9">
+                                        <label>{{ national_id }} </label>
+                                    </div>
 
+                                </div>
+                            </div>
+                            <div class="container">
+                                <div class="row justify-content-start">
+                                    <div class="col-3">
+                                        <strong> <label for="your_name">Διεύθυνση Κατοικίας: </label>
+                                        </strong>
+                                    </div>
+                                    <div class="col-9">
+                                        <label>{{ address }} </label>
+                                    </div>
+
+                                </div>
+                            </div>
 
                         </div>
                     </div>
@@ -475,6 +499,7 @@
     <div class="tab-pane fade" id="education" role="tabpanel" aria-labelledby="education-tab">
         <div class="card card-body border border-2 cardWrap">
             <div class="container-fluid">
+                {% if user.groups.all.0.name == 'professors' %}
                 <a class="btn btn-secondary" data-bs-toggle="collapse" href="#collapseFilter" role="button"
                     aria-expanded="false" aria-controls="collapseFilter">
                     <i class="bi bi-funnel"></i> Κριτήρια Αναζήτησης
@@ -490,6 +515,7 @@
                         </form>
                     </div>
                 </div>
+                {% endif %}
                 <br>
                 <div class="card card-body border border-2">
                     <div class="card-title">
@@ -572,22 +598,7 @@
     <div class="tab-pane fade" id="job" role="tabpanel" aria-labelledby="job-tab">
         <div class="card card-body border border-2 cardWrap">
             <div class="container-fluid">
-                <a class="btn btn-secondary" data-bs-toggle="collapse" href="#collapseFilter" role="button"
-                    aria-expanded="false" aria-controls="collapseFilter">
-                    <i class="bi bi-funnel"></i> Κριτήρια Αναζήτησης
-                </a>
-                <br>
-
-                <div class="card collapse" id="collapseFilter">
-                    <div class="card card-body">
-                        <form class="filterform" method="get">
-                            <!-- {{ speech_filter.form|crispy }}
-                            <br>
-                            <button class="btn btn-secondary" type="submit">Αναζήτηση</button> -->
-                        </form>
-                    </div>
-                </div>
-                <br>
+                
 
                 <div class="card card-body border border-2">
                     <div class="card-title">
@@ -658,22 +669,7 @@
     <div class="tab-pane fade" id="travel" role="tabpanel" aria-labelledby="travel-tab">
         <div class="card card-body border border-2 cardWrap">
             <div class="container-fluid">
-                <a class="btn btn-secondary" data-bs-toggle="collapse" href="#collapseFilter" role="button"
-                    aria-expanded="false" aria-controls="collapseFilter">
-                    <i class="bi bi-funnel"></i> Κριτήρια Αναζήτησης
-                </a>
-                <br>
-
-                <div class="card collapse" id="collapseFilter">
-                    <div class="card card-body">
-                        <form class="filterform" method="get">
-                            <!-- {{ travel_filter.form|crispy }}
-                            <br>
-                            <button class="btn btn-secondary" type="submit">Αναζήτηση</button> -->
-                        </form>
-                    </div>
-                </div>
-                <br>
+                
                 <div class="card card-body border border-2">
                     <div class="card-title">
                         <div class="d-flex flex-row-reverse">
@@ -725,6 +721,7 @@
                                     <td></td>
                                     <td></td>
                                     <td></td>
+                                    <td></td>
 
                                 </tr>
                                 {% endfor %}
@@ -741,21 +738,7 @@
     <div class="tab-pane fade" id="languages" role="tabpanel" aria-labelledby="languages-tab">
         <div class="card card-body border border-2 cardWrap">
             <div class="container-fluid">
-                <a class="btn btn-secondary" data-bs-toggle="collapse" href="#collapseFilter" role="button"
-                    aria-expanded="false" aria-controls="collapseFilter">
-                    <i class="bi bi-funnel"></i> Κριτήρια Αναζήτησης
-                </a>
-                <br>
-
-                <div class="card collapse" id="collapseFilter">
-                    <div class="card card-body">
-                        <form class="filterform" method="get">
-                            <!-- {{ travel_filter.form|crispy }}
-                        <br>
-                        <button class="btn btn-secondary" type="submit">Αναζήτηση</button> -->
-                        </form>
-                    </div>
-                </div>
+         
                 <br>
                 <div class="card card-body border border-2">
                     <div class="card-title">
@@ -808,6 +791,7 @@
                                     <td></td>
                                     <td></td>
                                     <td></td>
+                                    <td></td>
 
                                 </tr>
                                 {% endfor %}
@@ -835,7 +819,7 @@
                                 {% if edit %}
                                 <a class="btn btn-secondary" href="{% url 'edit_additional_info' application_id %}"
                                     style="background-color: #23384e;">
-                                    <i class="bi bi-clipboard-plus-fill"></i>
+                                    <i class="bi bi-pencil-fill"></i>
                                     Επεξεργασία </a>
                                 {% endif %}
                             </div>
@@ -1039,6 +1023,30 @@
                                                                     <label>{{ birth_date }} </label>
                                                                 </div>
 
+                                                            </div>
+                                                        </div>
+                                                        <div class="container">
+                                                            <div class="row justify-content-start">
+                                                                <div class="col-3">
+                                                                    <strong> <label for="your_name">Αριθμός Ταυτότητας: </label>
+                                                                    </strong>
+                                                                </div>
+                                                                <div class="col-9">
+                                                                    <label>{{ national_id }} </label>
+                                                                </div>
+                            
+                                                            </div>
+                                                        </div>
+                                                        <div class="container">
+                                                            <div class="row justify-content-start">
+                                                                <div class="col-3">
+                                                                    <strong> <label for="your_name">Διεύθυνση Κατοικίας: </label>
+                                                                    </strong>
+                                                                </div>
+                                                                <div class="col-9">
+                                                                    <label>{{ address }} </label>
+                                                                </div>
+                            
                                                             </div>
                                                         </div>
                                                     </div>
