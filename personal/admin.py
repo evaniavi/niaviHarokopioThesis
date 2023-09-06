@@ -9,9 +9,9 @@ from django.contrib.admin import AdminSite
 # admin.site.register(Profile)
 # admin.site.register(BasicUserInfo)
 # admin.site.register(EducationInfo)
-admin.site.register(Departments)
-admin.site.register(PostgraduatePrograms)
-admin.site.register(ProgramDirections)
+# admin.site.register(Departments)
+# admin.site.register(PostgraduatePrograms)
+# admin.site.register(ProgramDirections)
 # admin.site.register(Application)
 # admin.site.register(JobInfo)
 # admin.site.register(Recommendation)
@@ -109,10 +109,10 @@ class ApplicationAdmin(ExportActionMixin,admin.ModelAdmin):
         qs = super().get_queryset(request)
         if request.user.groups.filter(name='secretary_dit').exists():
             dep=1
-            program = PostgraduatePrograms.objects.filter(id=dep)
+            program = PostgraduatePrograms.objects.filter(department_id=dep)
         elif request.user.groups.filter(name='secretary_geo').exists():
             dep=3
-            program = PostgraduatePrograms.objects.filter(id=dep)
+            program = PostgraduatePrograms.objects.filter(department_id=dep)
         else:
             program = PostgraduatePrograms.objects.all()
         return qs.filter(program_id__in=program,status="Οριστικοποιημένη").prefetch_related('recommendation_set') #.exclude(status="Υπό Επεξεργασία")
@@ -160,10 +160,10 @@ class ApprovedApplicationAdmin(admin.ModelAdmin):
         qs = super().get_queryset(request)
         if request.user.groups.filter(name='secretary_dit').exists():
             dep=1
-            program = PostgraduatePrograms.objects.filter(id=dep)
+            program = PostgraduatePrograms.objects.filter(department_id=dep)
         elif request.user.groups.filter(name='secretary_geo').exists():
             dep=3
-            program = PostgraduatePrograms.objects.filter(id=dep)
+            program = PostgraduatePrograms.objects.filter(department_id=dep)
         else:
             program = PostgraduatePrograms.objects.all()
         return qs.filter(program_id__in=program,status="Αποδεκτή")
@@ -204,14 +204,69 @@ class RejectedApplicationAdmin(admin.ModelAdmin):
         qs = super().get_queryset(request)
         if request.user.groups.filter(name='secretary_dit').exists():
             dep=1
-            program = PostgraduatePrograms.objects.filter(id=dep)
+            program = PostgraduatePrograms.objects.filter(department_id=dep)
         elif request.user.groups.filter(name='secretary_geo').exists():
             dep=3
-            program = PostgraduatePrograms.objects.filter(id=dep)
+            program = PostgraduatePrograms.objects.filter(department_id=dep)
         else:
             program = PostgraduatePrograms.objects.all()
         return qs.filter(program_id__in=program,status="Απορρίφθηκε")
     
+    
+class DirectionsAdmin(admin.ModelAdmin):
+    
+    list_display = (
+        'name',
+        'program',
+
+    )
+    def formfield_for_foreignkey(self, db_field, request=None, **kwargs):
+                if db_field.name == "program":
+                    dep = 0
+                    if request.user.groups.filter(name='secretary_dit').exists():
+                        dep=1
+                    elif request.user.groups.filter(name='secretary_geo').exists():
+                        dep=3
+                    kwargs["queryset"] = PostgraduatePrograms.objects.filter(department_id=dep)
+                    return super(DirectionsAdmin, self).formfield_for_foreignkey(db_field, request, **kwargs)
+                if db_field.name == "name":
+                    kwargs["queryset"] = ProgramDirections.objects
+                    return super(DirectionsAdmin, self).formfield_for_foreignkey(db_field, request, **kwargs)
+
+    
+class PostgradProgramsAdmin(admin.ModelAdmin):
+    
+    list_display = (
+        'name',
+        'department',
+
+    )
+    def formfield_for_foreignkey(self, db_field, request=None, **kwargs):
+                if db_field.name == "department":
+                    dep = 0
+                    if request.user.groups.filter(name='secretary_dit').exists():
+                        dep=1
+                    elif request.user.groups.filter(name='secretary_geo').exists():
+                        dep=3
+                    kwargs["queryset"] = Departments.objects.filter(id=dep)
+                    return super(PostgradProgramsAdmin, self).formfield_for_foreignkey(db_field, request, **kwargs)
+                if db_field.name == "name":
+                    kwargs["queryset"] = PostgraduatePrograms.objects
+                    return super(PostgradProgramsAdmin, self).formfield_for_foreignkey(db_field, request, **kwargs)
+    def get_queryset(self, request):
+        dep = 0
+        qs = super().get_queryset(request)
+        if request.user.groups.filter(name='secretary_dit').exists():
+            dep=1
+            program = PostgraduatePrograms.objects.filter(department_id=dep)
+            
+        elif request.user.groups.filter(name='secretary_geo').exists():
+            dep=3
+            program = PostgraduatePrograms.objects.filter(department_id=dep)
+        else:
+            program = PostgraduatePrograms.objects.all()
+        return qs.filter(id__in=program).select_related('department')
+
 class AssignedProfessorsAdmin(admin.ModelAdmin):
     
     list_display = (
@@ -231,7 +286,7 @@ class AssignedProfessorsAdmin(admin.ModelAdmin):
                         dep=1
                     elif request.user.groups.filter(name='secretary_geo').exists():
                         dep=3
-                    kwargs["queryset"] = PostgraduatePrograms.objects.filter(id=dep)
+                    kwargs["queryset"] = PostgraduatePrograms.objects.filter(department_id=dep)
                     return super(AssignedProfessorsAdmin, self).formfield_for_foreignkey(db_field, request, **kwargs)
                 if db_field.name == "user":
                     kwargs["queryset"] = User.objects.select_related('profile').filter(profile__title__contains='Καθηγητής')
@@ -242,16 +297,15 @@ class AssignedProfessorsAdmin(admin.ModelAdmin):
         qs = super().get_queryset(request)
         if request.user.groups.filter(name='secretary_dit').exists():
             dep=1
-            program = PostgraduatePrograms.objects.filter(id=dep)
+            program = PostgraduatePrograms.objects.filter(department_id=dep)
             
         elif request.user.groups.filter(name='secretary_geo').exists():
             dep=3
-            program = PostgraduatePrograms.objects.filter(id=dep)
+            program = PostgraduatePrograms.objects.filter(department_id=dep)
         else:
             program = PostgraduatePrograms.objects.all()
         return qs.filter(program_id__in=program).select_related('program') #.exclude(status="Υπό Επεξεργασία")
     
-
    
 
 
@@ -259,5 +313,8 @@ admin.site.register(AssignedProffessors,AssignedProfessorsAdmin)
 admin.site.register(Application,ApplicationAdmin)
 admin.site.register(ApprovedApplication,ApprovedApplicationAdmin)
 admin.site.register(RejectedApplication,RejectedApplicationAdmin)
+admin.site.register(ProgramDirections,DirectionsAdmin)
+admin.site.register(PostgraduatePrograms,PostgradProgramsAdmin)
+
 
 
